@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Damlaget · Säsong 2026</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f1720">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Damlaget">
+<style>
+  :root{
+    --bg:#0f1720; --card:#182333; --card2:#1e2c40; --line:#2a3a52;
+    --txt:#e9eef5; --sub:#9fb0c6; --accent:#ff7a45; --accent2:#4fd1a5;
+    --power:#ff7a45; --bas:#4fa8ff; --warn:#ffcf5c; --prehabc:#b892ff;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    padding-bottom:70px;
+  }
+  header{
+    padding:18px 16px 12px; background:linear-gradient(135deg,#1a2536,#101a27);
+    border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20;
+  }
+  header h1{margin:0; font-size:1.15rem; letter-spacing:.02em;}
+  header p{margin:2px 0 0; color:var(--sub); font-size:.82rem;}
+  nav.tabs{
+    display:flex; gap:6px; padding:10px 16px; background:var(--bg);
+    position:sticky; top:64px; z-index:19; border-bottom:1px solid var(--line);
+  }
+  nav.tabs button{
+    flex:1; padding:10px 4px; border:none; border-radius:10px; background:var(--card);
+    color:var(--sub); font-size:.85rem; font-weight:600; cursor:pointer;
+  }
+  nav.tabs button.active{background:var(--accent); color:#12130f;}
+  main{padding:14px 14px 30px;}
+  .view{display:none;}
+  .view.active{display:block;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:14px; margin-bottom:12px;
+  }
+  .card h2{margin:0 0 8px; font-size:1rem; color:var(--accent2);}
+  .card h3{margin:14px 0 6px; font-size:.92rem; color:var(--txt);}
+  .card p{margin:6px 0; color:var(--sub); font-size:.88rem; line-height:1.45;}
+  .quote{
+    border-left:3px solid var(--accent); padding:8px 12px; margin:10px 0;
+    color:var(--txt); font-style:italic; font-size:.86rem; background:var(--card2);
+    border-radius:0 8px 8px 0;
+  }
+  ul.bullets{margin:6px 0; padding-left:18px; color:var(--sub); font-size:.87rem; line-height:1.5;}
+  table.info-table{width:100%; border-collapse:collapse; margin:8px 0; font-size:.82rem;}
+  table.info-table th, table.info-table td{
+    border:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top;
+  }
+  table.info-table th{background:var(--card2); color:var(--accent2);}
+  .segmented{display:flex; gap:6px; margin-bottom:10px;}
+  .segmented button{
+    flex:1; padding:9px 4px; border:1px solid var(--line); border-radius:10px;
+    background:var(--card2); color:var(--sub); font-weight:600; font-size:.85rem; cursor:pointer;
+  }
+  .segmented button.active{background:var(--accent); color:#12130f; border-color:var(--accent);}
+  .segmented.week button.active.power{background:var(--power); color:#12130f;}
+  .segmented.week button.active.bas{background:var(--bas); color:#0d1a26;}
+  .segmented.week button.active.prehab{background:var(--prehabc); color:#1a1030;}
+  .block{
+    border:1px solid var(--line); border-radius:12px; padding:10px; margin:10px 0; background:var(--card2);
+  }
+  .block-title{font-size:.8rem; color:var(--warn); text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px;}
+  .exercise{
+    border-bottom:1px dashed var(--line); padding:8px 0;
+  }
+  .exercise:last-child{border-bottom:none;}
+  .exercise .slot{font-size:.78rem; color:var(--accent); font-weight:700;}
+  .exercise select{
+    width:100%; margin:4px 0; padding:8px; border-radius:8px; border:1px solid var(--line);
+    background:var(--card); color:var(--txt); font-size:.85rem;
+  }
+  .exercise input.ex-variant-text{
+    width:100%; margin:4px 0; padding:8px; border-radius:8px; border:1px solid var(--line);
+    background:var(--card); color:var(--txt); font-size:.85rem;
+  }
+  .rec{font-size:.78rem; color:var(--sub); margin-bottom:6px;}
+  .fields{display:flex; gap:6px; flex-wrap:wrap;}
+  .fields > div{flex:1; min-width:70px;}
+  .fields label{display:block; font-size:.68rem; color:var(--sub); margin-bottom:2px;}
+  .fields input{
+    width:100%; padding:8px; border-radius:8px; border:1px solid var(--line);
+    background:var(--card); color:var(--txt); font-size:.9rem;
+  }
+  .checkrow{
+    display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px dashed var(--line);
+  }
+  .checkrow:last-child{border-bottom:none;}
+  .checkrow input[type=checkbox]{width:20px; height:20px; accent-color:var(--accent2); flex-shrink:0;}
+  .checkrow .exname{font-size:.86rem; flex:1;}
+  .checkrow .exrec{font-size:.74rem; color:var(--sub);}
+  details{margin-top:10px;}
+  details summary{
+    cursor:pointer; font-weight:600; color:var(--accent2); font-size:.88rem; padding:6px 0;
+  }
+  details .sub-section{margin:8px 0 4px;}
+  details .sub-section h4{margin:6px 0 2px; font-size:.78rem; color:var(--warn); text-transform:uppercase;}
+  .save-bar{
+    position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1px solid var(--line);
+    padding:10px 14px; display:flex; gap:8px; z-index:25;
+  }
+  .save-bar input[type=date]{
+    flex:1; padding:10px; border-radius:10px; border:1px solid var(--line);
+    background:var(--card2); color:var(--txt); font-size:.85rem;
+  }
+  .btn{
+    padding:10px 16px; border-radius:10px; border:none; font-weight:700; font-size:.88rem; cursor:pointer;
+  }
+  .btn.primary{background:var(--accent2); color:#0d1a15;}
+  .btn.ghost{background:var(--card2); border:1px solid var(--line); color:var(--txt);}
+  .btn.small{padding:6px 10px; font-size:.76rem;}
+  .btn.danger{background:#e0553f; color:#fff;}
+  .log-entry{
+    background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:10px; margin-bottom:10px;
+  }
+  .log-entry .top{display:flex; justify-content:space-between; align-items:center;}
+  .log-entry .top .tag{
+    font-size:.72rem; padding:3px 8px; border-radius:999px; font-weight:700;
+  }
+  .tag.power{background:var(--power); color:#12130f;}
+  .tag.bas{background:var(--bas); color:#0d1a26;}
+  .tag.p3{background:var(--warn); color:#12130f;}
+  .tag.prehab{background:var(--prehabc); color:#1a1030;}
+  .log-entry .date{font-size:.78rem; color:var(--sub);}
+  .log-entry .details{margin-top:8px; font-size:.82rem; color:var(--txt); display:none;}
+  .log-entry .details.show{display:block;}
+  .log-entry .details div{padding:3px 0; border-bottom:1px dashed var(--line);}
+  .log-entry .actions{display:flex; gap:6px; margin-top:8px;}
+  .empty{color:var(--sub); font-size:.85rem; text-align:center; padding:20px 0;}
+  select.chart-select{
+    width:100%; padding:8px; border-radius:8px; border:1px solid var(--line);
+    background:var(--card2); color:var(--txt); font-size:.85rem; margin-bottom:8px;
+  }
+  svg.chart{width:100%; height:160px; background:var(--card2); border-radius:10px;}
+  .toolbar{display:flex; gap:8px; margin-top:10px;}
+  .toolbar .btn{flex:1;}
+  .pos-note{font-size:.78rem; color:var(--sub);}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Damlaget · Säsong 2026</h1>
+  <p>Division 1 · Underhållsstyrka &amp; Explosivitet — Fas 4</p>
+</header>
+
+<nav class="tabs">
+  <button data-tab="info" class="active">Info</button>
+  <button data-tab="traning">Träning</button>
+  <button data-tab="logg">Logg</button>
+</nav>
+
+<main>
+
+  <!-- ============ INFO TAB ============ -->
+  <section class="view active" id="tab-info">
+
+    <div class="card">
+      <h2>Helhetstanken</h2>
+      <p>Fas 1, 2 och 3 byggde tålighet, styrketak och explosivitet fram till seriepremiär. Nu handlar det om något annat: att behålla det som byggts, hålla spelarna skadefria genom en lång säsong, och stötta matchprestationen — inte konkurrera med den.</p>
+      <div class="quote">Målet i säsong är inte att bygga ny styrka. Målet är att inte tappa den vi redan har — och att göra det utan att stjäla från spelarnas ben inför match.</div>
+    </div>
+
+    <div class="card">
+      <h2>Kärnprinciper</h2>
+      <ul class="bullets">
+        <li>Två fasta gympass i veckan, plus ett valfritt tredje. Samma split: Pass 1 underkropp, Pass 2 överkropp.</li>
+        <li>Belastningen vågar mellan två lägen i tvåveckorsblock (Power ↔ Bas) — se tabellen nedan.</li>
+        <li>Belastning styrs med RIR (reps i reserve) istället för fasta procentsatser.</li>
+        <li>Prehab för knä, ljumske och axel är obligatoriskt genom hela säsongen.</li>
+        <li>Pass läggs helst 48+ timmar före match. Ett kort aktiveringspass kan köras samma dag som match.</li>
+        <li>Extra hög matchbelastning (dubbelmatcher, cup)? Skala bort pass 3 först, sedan volym i pass 1–2 — aldrig prehab.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Så läser du programmet</h2>
+      <ul class="bullets">
+        <li><b>RIR</b> (Reps I Reserve): hur många reps spelaren teoretiskt hade kunnat göra till innan set brutit teknik/fart. "Bygg mot 1–2 RIR" = sista setet tungt men kontrollerat. Ingen failure (0 RIR) i säsong.</li>
+        <li><b>Superset</b>: övningar med samma bokstav (A1+A2, B1+B2 osv) körs i par — 15–20 sek vila mellan övningarna i paret, 2–3 min mellan hela varv.</li>
+        <li><b>Alternativ</b>: varje rad listar 2–3 jämbördiga alternativ — tränaren väljer utifrån utrustning, teknik eller besvär.</li>
+        <li>Explosiva/olympiska moment styrs med % av max + fart/kvalitet, inte RIR.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Vågad belastning</h2>
+      <table class="info-table">
+        <tr><th>Period</th><th>Vecko-typ</th><th>Vad som skiljer</th></tr>
+        <tr><td>Vecka 1–2, 5–6</td><td>Power-vecka</td><td>Tyngre bas-lyft (låg volym/hög intensitet) + olympiska lyft i Pass 2</td></tr>
+        <tr><td>Vecka 3–4, 7–8</td><td>Bas-vecka</td><td>Något högre volym, lägre intensitet, mer hypertrofi-ton</td></tr>
+      </table>
+      <p>Justera vågen efter matchschemat: hellre skjuta en Power-vecka en match framåt än att köra tungt inför en avgörande match.</p>
+    </div>
+
+    <div class="card">
+      <h2>Veckoupplägg</h2>
+      <table class="info-table">
+        <tr><th>Pass</th><th>Fokus</th></tr>
+        <tr><td>Pass 1</td><td>Underkropp &amp; Bål — bas/unilateral styrka, prehab knä/ljumske</td></tr>
+        <tr><td>Pass 2</td><td>Överkropp &amp; Explosivitet — press/drag + lågvolyms power/hopp/kast</td></tr>
+        <tr><td>Pass 3 (valfritt)</td><td>Kettlebell &amp; Helkropp — funktionell styrka, grepp och bål</td></tr>
+      </table>
+      <p>Rekommenderad placering: Pass 1 &amp; 2 med minst en vilodag emellan, tidigt i veckan. Pass 3 lugn dag, aldrig kvällen/morgonen före match.</p>
+      <p><b>Bara ett pass i veckan?</b> Kör Pass 1 — det bär mest av den skadeförebyggande effekten. Pass 2 kan kortas till Block A + prehab.</p>
+    </div>
+
+    <div class="card">
+      <h2>Positionsspecifika alternativ</h2>
+      <p class="pos-note">Vid behov kan explosiv-blocket i Pass 1/2 bytas ut mot något mer positionsspecifikt:</p>
+      <table class="info-table">
+        <tr><th>Position</th><th>Fokus / övningar</th></tr>
+        <tr><td>M6 / Mittförsvar</td><td>Zercher Carry, resisted lateral push, landmine rotation, tung KB row</td></tr>
+        <tr><td>V6/H6 / Kanter</td><td>Single Leg Box Jump, lateral bound with stick, approach jump</td></tr>
+        <tr><td>9-meterspelare</td><td>Medball rotational throw, enarms landmine press, rotational scoop toss</td></tr>
+        <tr><td>Målvakt</td><td>Lateral bounds, split-stance medball throw, kort lateral släde, Bottom Up KB Press</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Core-övningar — exempel</h2>
+      <p class="pos-note">Förslag till Core-slotet under Position &amp; Core i varje pass. Bas-övningarna bygger stabilitet/uthållighet, de explosiva bygger rotationskraft för skott och kast.</p>
+      <h3>Bas core (stabilitet &amp; uthållighet)</h3>
+      <ul class="bullets">
+        <li>Planka (front eller sido)</li>
+        <li>Dead Bug</li>
+        <li>Pallof Press</li>
+        <li>Bird Dog</li>
+        <li>Hantel/KB Farmers Carry (anti-lateral flexion)</li>
+        <li>Ab Wheel Rollout (kontrollerad)</li>
+      </ul>
+      <h3>Explosiv core (rotationskraft, skott &amp; kast)</h3>
+      <ul class="bullets">
+        <li>Medicinboll Rotational Throw (mot vägg)</li>
+        <li>Landmine Rotation (rask/explosiv)</li>
+        <li>Russian Twist med medicinboll, explosivt tempo</li>
+        <li>Overhead Slam med medicinboll</li>
+        <li>Cable/Band Woodchopper (snabbt tempo)</li>
+        <li>Skater Hop med bålkontroll (rotationsstabilitet i rörelse)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Matchdagspass (referens)</h2>
+      <p>Ca 15–20 min, förmiddag/tidig eftermiddag — ersätter INTE Pass 1/2, ska väcka nervsystemet utan trötthet.</p>
+      <table class="info-table">
+        <tr><th>Övning</th><th>Set/reps</th></tr>
+        <tr><td>Lätt dynamisk uppvärmning</td><td>5 min</td></tr>
+        <tr><td>Countermovement Jump</td><td>2x3</td></tr>
+        <tr><td>Trap Bar Jump (lätt)</td><td>2x3 @ ca 20 %</td></tr>
+        <tr><td>Medball Rotational Throw</td><td>2x3/sida</td></tr>
+        <tr><td>Facepulls eller Band Pull Apart</td><td>1x12</td></tr>
+      </table>
+      <p>Ingen belastning över kroppsvikt/lätt vikt. Inga set till failure.</p>
+    </div>
+
+    <div class="card">
+      <h2>Grundregel genom säsongen</h2>
+      <ul class="bullets">
+        <li>Gymmet ska stötta matchprestationen — aldrig konkurrera med den.</li>
+        <li>Försvinner explosivitet/fart i ett pass är belastningen fel den dagen — oavsett vad som står skrivet.</li>
+        <li>Prehab (knä, ljumske, axel) är aldrig det som stryks först.</li>
+        <li>Vid tvekan: fråga spelaren hur benen/axlarna känns innan belastning bestäms.</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- ============ TRÄNING TAB ============ -->
+  <section class="view" id="tab-traning">
+
+    <div class="card">
+      <div class="segmented" id="passSelector">
+        <button data-pass="pass1" class="active">Pass 1</button>
+        <button data-pass="pass2">Pass 2</button>
+        <button data-pass="pass3">Pass 3</button>
+      </div>
+      <div class="segmented week" id="weekSelector"></div>
+    </div>
+
+    <div id="trainingContent"></div>
+
+  </section>
+
+  <!-- ============ LOGG TAB ============ -->
+  <section class="view" id="tab-logg">
+    <div class="card">
+      <h2>Utveckling</h2>
+      <select class="chart-select" id="chartExerciseSelect"><option value="">Välj övning…</option></select>
+      <svg class="chart" id="chartSvg" viewBox="0 0 300 160"></svg>
+      <p class="empty" id="chartEmpty" style="display:none;">Logga vikt på en övning för att se utveckling här.</p>
+    </div>
+
+    <div class="card">
+      <h2>Historik</h2>
+      <div id="logList"></div>
+      <div class="toolbar">
+        <button class="btn ghost small" id="exportBtn">Exportera (JSON)</button>
+        <button class="btn ghost small" id="importBtn">Importera</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none;">
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="save-bar" id="saveBar">
+  <input type="date" id="sessionDate">
+  <button class="btn primary" id="saveSessionBtn">Spara pass</button>
+</div>
+
+<script>
+/* ================= PROGRAM DATA ================= */
+const PROGRAM = {
+  pass1: {
+    title: "Pass 1 — Underkropp & Bål",
+    hasWeekTypes: true,
+    warmup: [
+      {name:"Enbensknäböj (kontrollerad)", rec:"2x6/ben — knäkontroll, aktivering inför huvudpass"},
+      {name:"Copenhagen Plank", rec:"2x20–25 sek/sida — adduktorstyrka, skyddar ljumsken"},
+      {name:"Y-balans eller Box-drop", rec:"2 varv/ben resp. 2x4 — landnings- och balansaktivering"}
+    ],
+    weeks: {
+      power: [
+        {label:"Block A", superset:true, exercises:[
+          {slot:"A1", title:"Tvåbensövning", options:["Trap Bar Deadlift (bilateral/staggered)","Back Squat","Front Squat"], rec:"4x3, bygg mot 1–2 RIR"},
+          {slot:"A2", title:"Kontrast/hopp", options:["Trap Bar Jump","KB Jump Squat","CMJ"], rec:"4x3 @ 20–30 %"}
+        ]},
+        {label:"Block B", superset:true, exercises:[
+          {slot:"B1", title:"Enbensövning", options:["Bulgarian Split Squat","Deficit FFE Split Squat","Front Rack Reverse Lunge"], rec:"3x4/ben, bygg mot 1–2 RIR"},
+          {slot:"B2", title:"Höft/hamstring", options:["Single Leg RDL","Hip Thrust","KB Swing"], rec:"3x5/ben, bygg mot 2–3 RIR"}
+        ]}
+      ],
+      bas: [
+        {label:"Block A", superset:false, exercises:[
+          {slot:"A1", title:"Tvåbensövning", options:["Trap Bar Deadlift (bilateral/staggered)","Back Squat","Front Squat"], rec:"3x4–6, bygg mot 2–3 RIR"}
+        ]},
+        {label:"Block B", superset:true, exercises:[
+          {slot:"B1", title:"Enbensövning", options:["Bulgarian Split Squat","Reverse Lunge","Goblet Split Squat"], rec:"3x6–8/ben, bygg mot 2–3 RIR"},
+          {slot:"B2", title:"Höft/hamstring", options:["Single Leg RDL","Hip Thrust","GHD Extension"], rec:"3x6–8/ben, bygg mot 2–3 RIR"}
+        ]},
+        {label:"Block C", superset:false, exercises:[
+          {slot:"C1", title:"Rotation/sidled", options:["Lateral Bound","Landmine Rotation","Skater Hop"], rec:"3x4/sida, max fart"}
+        ]}
+      ]
+    },
+    cooldown: [
+      {name:"Nordic Hamstring", rec:"2x4–6 — excentrisk hamstringsstyrka, kärnan i skadeprevention"},
+      {name:"Vad- & Tibialisträning", rec:"2x10–12 vardera — fotledsstyvhet och balans"}
+    ]
+  },
+  pass2: {
+    title: "Pass 2 — Överkropp & Explosivitet",
+    hasWeekTypes: true,
+    warmup: [
+      {name:"Facepulls (gummiband)", rec:"2x15 — skulderbladskontroll inför press/drag"},
+      {name:"Excentrisk rotation", rec:"2x8/arm — rotatorcuff-styrka, skyddar kastaxeln"},
+      {name:"Wall Slides", rec:"2x10 — skulderrörlighet och kontroll"}
+    ],
+    weeks: {
+      power: [
+        {label:"Block A", superset:true, exercises:[
+          {slot:"A1", title:"Olympiskt lyft", options:["Hang Power Clean","Power Clean","Clean Pull"], rec:"4x3 @ 65–75 %"},
+          {slot:"A2", title:"Kontrast/press", options:["Push Jerk","Push Press","Med Ball Power Throw"], rec:"4x3 @ 60–70 %"}
+        ]},
+        {label:"Block B", superset:false, exercises:[
+          {slot:"B1", title:"Pressövning", options:["Bänkpress","Floor Press","Swiss Bar Press"], rec:"4x3–4, bygg mot 1–2 RIR"}
+        ]},
+        {label:"Block C", superset:false, exercises:[
+          {slot:"C1", title:"Dragövning", options:["Chins","Neutral Grip Pull Up","Tung rodd"], rec:"3x5–6, bygg mot 2–3 RIR"}
+        ]},
+        {label:"Block D", superset:false, exercises:[
+          {slot:"D1", title:"Rotation/kast", options:["Landmine Rotation to Press","Medball Throw","Rotational Cable Press"], rec:"3x5/sida, max fart"}
+        ]}
+      ],
+      bas: [
+        {label:"Block A", superset:false, exercises:[
+          {slot:"A1", title:"Pressövning", options:["Bänkpress","Hantelpress","Swiss Bar Press"], rec:"3x6–8, bygg mot 2–3 RIR"}
+        ]},
+        {label:"Block B", superset:false, exercises:[
+          {slot:"B1", title:"Dragövning", options:["Chins","Tung rodd","Lat pulldown"], rec:"3x8–10, bygg mot 2–3 RIR"}
+        ]},
+        {label:"Block C", superset:false, exercises:[
+          {slot:"C1", title:"Axelpress", options:["Militärpress","Landmine Press","Sittande hantelpress"], rec:"3x8–10, bygg mot 2–3 RIR"}
+        ]},
+        {label:"Block D", superset:true, exercises:[
+          {slot:"D1", title:"Power", options:["Trap Bar Jump","lätt Hang Clean","KB Jump Squat"], rec:"3x3 @ 20–30 % / 50–60 %"},
+          {slot:"D2", title:"Rotation/kast", options:["Landmine Rotation to Press","Medball Throw"], rec:"3x5/sida, max fart"}
+        ]}
+      ]
+    },
+    cooldown: [
+      {name:"Bottom Up KB Press", rec:"2x6/arm — rotatorcuff och skulderkontroll"},
+      {name:"Sidliggande Rotation eller Externa Rotationer", rec:"2x12–15 — kastaxelns hälsa"}
+    ]
+  },
+  pass3: {
+    title: "Pass 3 (valfritt) — Kettlebell & Helkropp",
+    hasWeekTypes: false,
+    warmup: [],
+    single: [
+      {slot:"1", title:"Double KB Front Squat", options:["Double KB Front Squat"], rec:"3x6"},
+      {slot:"2", title:"Double KB Clean & Press", options:["Double KB Clean & Press"], rec:"3x5"},
+      {slot:"3", title:"Single Arm KB Row", options:["Single Arm KB Row"], rec:"3x8/arm"},
+      {slot:"4", title:"Kettlebell Swings", options:["Kettlebell Swings"], rec:"3x12–15"},
+      {slot:"5", title:"Farmers Walk / Carry", options:["Farmers Walk / Carry"], rec:"3x30–40 m"}
+    ],
+    cooldown: []
+  }
+};
+
+const EXTENDED_PREHAB = [
+  {h:"1. Uppvärmning (5–8 min)", items:[
+    {name:"Lätt jogg eller cykel", rec:"3–5 min"},
+    {name:"Höftcirklar, benpendlingar (fram/bak, sida)", rec:"10 st/riktning"},
+    {name:"Armcirklar", rec:""},
+    {name:"Bålrotationer", rec:"10 st"}
+  ]},
+  {h:"2. Rörlighet – baksida & rygg (10–12 min)", items:[
+    {name:"Liggande hamstring stretch med band", rec:"2x30 sek/ben"},
+    {name:"World's Greatest Stretch", rec:"2x5/sida"},
+    {name:"Cat–Cow", rec:"10 reps"},
+    {name:"Sittande/stående framåtböjning", rec:"2x30 sek"},
+    {name:"Thoracic rotations (\"open book\")", rec:"2x8/sida"},
+    {name:"Child's pose med sidosträckning", rec:"2x30 sek/sida"},
+    {name:"Höftböjarstretch", rec:"2x30 sek/sida"}
+  ]},
+  {h:"3. Axlar (8–10 min)", items:[
+    {name:"Utåtrotation med band", rec:"2x15"},
+    {name:"Y-T-W på bänk", rec:"2x10 (var position)"},
+    {name:"Face pulls", rec:"2x15"},
+    {name:"Scapular wall slides", rec:"2x10"}
+  ]},
+  {h:"4. Knä & baksida lår (12–15 min)", items:[
+    {name:"Nordic hamstring curls", rec:"3x6–8"},
+    {name:"Copenhagen plank", rec:"2x20–30 sek/sida"},
+    {name:"Rumänska enbens-marklyft", rec:"2x8/ben"},
+    {name:"Enbens knäböj (kontrollerad)", rec:"2x8/ben"}
+  ]},
+  {h:"5. Fotled & balans (5–7 min)", items:[
+    {name:"Enbensbalans (kudde/platta)", rec:"2x30 sek/ben"},
+    {name:"Enbenshopp med stabil landning", rec:"2x6/ben"},
+    {name:"Vristmobilitet med band", rec:"2x15"}
+  ]},
+  {h:"6. Core/bål (5–8 min)", items:[
+    {name:"Sidoplanka", rec:"2x30–45 sek/sida"},
+    {name:"Pallof press", rec:"2x10/sida"},
+    {name:"Dead bug", rec:"2x10/sida"}
+  ]},
+  {h:"7. Avslutning (2–3 min)", items:[
+    {name:"Lugn andning", rec:""},
+    {name:"Lätt statisk helkroppsstretch", rec:""}
+  ]}
+];
+
+const EXTENDED_PREHAB_EXTRA = [
+  {h:"Tillägg 1: Benhinnor (vid behov)", items:[
+    {name:"Tåhäv (raka ben)", rec:"3x15"},
+    {name:"Tåhäv (böjda knän, mot soleus)", rec:"3x15"},
+    {name:"Excentrisk tåhäv (långsamt ner, 3–4 sek)", rec:"3x10"},
+    {name:"Främre skenbensmuskel: gå på hälar", rec:"2x20 m"},
+    {name:"Skenbensresning med band (dorsalflexion)", rec:"2x15"},
+    {name:"Vadstretch mot vägg (rak + böjd knäled)", rec:"2x30 sek/ben, var version"},
+    {name:"Foot doming/kort fot-övning", rec:"2x10"}
+  ]},
+  {h:"Tillägg 2: Överstjäckning armbåge (vid behov)", items:[
+    {name:"Excentrisk triceps-kontroll (t.ex. utförsbacke i pushdown)", rec:"3x10"},
+    {name:"Stabilitet i sträckt läge — planka med händer", rec:"2x20–30 sek"},
+    {name:"Proprioception: kaströrelse med lätt boll mot vägg", rec:"2x10"},
+    {name:"Underarmsstabilitet: handledsböj/sträck med lätt vikt", rec:"2x12"},
+    {name:"Käpp/pinne-kontroll: sträck och håll utan att låsa ut, 2 sek paus", rec:"2x10"}
+  ]}
+];
+
+const POSITIONAL_SLOTS = [
+  {slot:"P1", title:"Positionsövning", placeholder:"Skriv in egen övning, t.ex. Zercher Carry, Lateral Bound..."},
+  {slot:"C1", title:"Core-övning", placeholder:"Skriv in egen core-övning, t.ex. Pallof Press, Medicinboll Rotational Throw..."}
+];
+
+/* ================= STORAGE ================= */
+const STORE_KEY = "damlaget2026_sessions";
+function loadSessions(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }catch(e){ return []; } }
+function saveSessions(arr){ localStorage.setItem(STORE_KEY, JSON.stringify(arr)); }
+
+/* ================= TAB NAV ================= */
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.getElementById('saveBar').style.display = btn.dataset.tab === 'traning' ? 'flex' : 'none';
+    if(btn.dataset.tab === 'logg'){ renderLog(); renderChartOptions(); }
+  });
+});
+document.getElementById('saveBar').style.display = 'none';
+
+/* ================= PASS / VIEW SELECTORS ================= */
+let currentPass = 'pass1';
+let currentView = 'power'; // 'power' | 'bas' | 'main' | 'prehab'
+
+const VIEW_DEFS = {
+  withWeeks: [
+    {key:'power', label:'Power-vecka', cls:'power'},
+    {key:'bas', label:'Bas-vecka', cls:'bas'},
+    {key:'prehab', label:'Prehab', cls:'prehab'}
+  ],
+  noWeeks: [
+    {key:'main', label:'Övningar', cls:'power'},
+    {key:'prehab', label:'Prehab', cls:'prehab'}
+  ]
+};
+
+function buildViewSelector(){
+  const defs = PROGRAM[currentPass].hasWeekTypes ? VIEW_DEFS.withWeeks : VIEW_DEFS.noWeeks;
+  if(!defs.some(d=>d.key===currentView)) currentView = defs[0].key;
+  const sel = document.getElementById('weekSelector');
+  sel.innerHTML = defs.map(d=>`<button data-view="${d.key}" class="${d.key===currentView ? 'active '+d.cls : ''}">${d.label}</button>`).join('');
+  sel.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      currentView = btn.dataset.view;
+      buildViewSelector();
+      renderTraining();
+    });
+  });
+}
+
+document.querySelectorAll('#passSelector button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#passSelector button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentPass = btn.dataset.pass;
+    buildViewSelector();
+    renderTraining();
+  });
+});
+
+buildViewSelector();
+
+/* ================= RENDER TRAINING ================= */
+function exerciseRowHtml(ex, keyPrefix){
+  const opts = ex.options.map(o=>`<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+  const showSelect = ex.options.length > 1;
+  return `
+    <div class="exercise" data-key="${keyPrefix}">
+      <div class="slot">${ex.slot ? ex.slot+' · ' : ''}${escapeHtml(ex.title)}</div>
+      <div class="rec">Rek: ${escapeHtml(ex.rec)}</div>
+      ${showSelect ? `<select class="ex-variant">${opts}</select>` : `<div class="rec">${escapeHtml(ex.options[0])}</div>`}
+      <div class="fields">
+        <div><label>Set</label><input type="text" class="ex-sets" placeholder="t.ex. 4"></div>
+        <div><label>Reps</label><input type="text" class="ex-reps" placeholder="t.ex. 3"></div>
+        <div><label>Vikt/kg</label><input type="text" class="ex-weight" placeholder="t.ex. 80"></div>
+        <div><label>RIR</label><input type="text" class="ex-rir" placeholder="1–2"></div>
+      </div>
+    </div>`;
+}
+
+function positionalExerciseRowHtml(p){
+  return `
+    <div class="exercise" data-key="${p.slot}">
+      <div class="slot">${p.slot} · ${escapeHtml(p.title)}</div>
+      <input type="text" class="ex-variant-text" placeholder="${escapeHtml(p.placeholder)}">
+      <div class="fields">
+        <div><label>Set</label><input type="text" class="ex-sets" placeholder="t.ex. 3"></div>
+        <div><label>Reps</label><input type="text" class="ex-reps" placeholder="t.ex. 8"></div>
+        <div><label>Vikt/kg</label><input type="text" class="ex-weight" placeholder="valfritt"></div>
+        <div><label>RIR</label><input type="text" class="ex-rir" placeholder="valfritt"></div>
+      </div>
+    </div>`;
+}
+
+function positionalBlockHtml(){
+  return `
+    <div class="block">
+      <div class="block-title">Position &amp; Core</div>
+      <p class="rec">Fritt val — se Info-fliken (Positionsspecifika alternativ, Core-övningar) för förslag, eller skriv in valfri egen övning.</p>
+      ${POSITIONAL_SLOTS.map(positionalExerciseRowHtml).join('')}
+    </div>`;
+}
+
+function checkListHtml(items, cls){
+  return items.map((it,i)=>`
+    <div class="checkrow" data-idx="${i}">
+      <input type="checkbox" class="${cls}-done">
+      <div style="flex:1;">
+        <div class="exname">${escapeHtml(it.name)}</div>
+        <div class="exrec">${escapeHtml(it.rec||'')}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderPrehabPage(prog){
+  let html = `<div class="card"><h2>${escapeHtml(prog.title)} — Prehab</h2>`;
+  html += `<p class="rec">Fullständig skadeförebyggande helkroppsrutin, 45–60 min. Kör vid behov — t.ex. på en lugn dag eller som eget kort pass mellan ordinarie gympass.</p>`;
+  EXTENDED_PREHAB.forEach(sec=>{
+    html += `<div class="block"><div class="block-title">${escapeHtml(sec.h)}</div>${checkListHtml(sec.items,'ext')}</div>`;
+  });
+  html += `<details><summary>Extra tillägg (vid specifika besvär)</summary>`;
+  EXTENDED_PREHAB_EXTRA.forEach(sec=>{
+    html += `<div class="sub-section"><h4>${escapeHtml(sec.h)}</h4>${checkListHtml(sec.items,'extx')}</div>`;
+  });
+  html += `</details></div>`;
+  document.getElementById('trainingContent').innerHTML = html;
+}
+
+function renderTraining(){
+  const prog = PROGRAM[currentPass];
+
+  if(currentView === 'prehab'){
+    renderPrehabPage(prog);
+    return;
+  }
+
+  let html = `<div class="card"><h2>${escapeHtml(prog.title)}</h2>`;
+
+  if(prog.warmup && prog.warmup.length){
+    html += `<h3>Prehab &amp; aktivering</h3><div class="block">${checkListHtml(prog.warmup,'warm')}</div>`;
+  }
+
+  if(prog.hasWeekTypes){
+    const blocks = prog.weeks[currentView];
+    blocks.forEach(b=>{
+      html += `<div class="block"><div class="block-title">${escapeHtml(b.label)}${b.superset ? ' · superset (15–20 sek vila mellan, 2–3 min mellan varv)' : ''}</div>`;
+      b.exercises.forEach(ex=> html += exerciseRowHtml(ex, ex.slot));
+      html += `</div>`;
+    });
+  } else {
+    html += `<div class="block">`;
+    prog.single.forEach(ex=> html += exerciseRowHtml(ex, ex.slot));
+    html += `</div>`;
+  }
+
+  html += positionalBlockHtml();
+
+  if(prog.cooldown && prog.cooldown.length){
+    html += `<h3>Avslutande prehab</h3><div class="block">${checkListHtml(prog.cooldown,'cool')}</div>`;
+  }
+
+  html += `</div>`;
+
+  document.getElementById('trainingContent').innerHTML = html;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ================= SAVE SESSION ================= */
+document.getElementById('sessionDate').valueAsDate = new Date();
+
+document.getElementById('saveSessionBtn').addEventListener('click', ()=>{
+  const prog = PROGRAM[currentPass];
+  const date = document.getElementById('sessionDate').value || new Date().toISOString().slice(0,10);
+
+  const warmup = collectChecklist('warm', prog.warmup);
+  const cooldown = collectChecklist('cool', prog.cooldown);
+  const extended = collectChecklist('ext', EXTENDED_PREHAB.flatMap(s=>s.items));
+  const extendedExtra = collectChecklist('extx', EXTENDED_PREHAB_EXTRA.flatMap(s=>s.items));
+
+  const exercises = [];
+  document.querySelectorAll('#trainingContent .exercise').forEach(row=>{
+    const select = row.querySelector('.ex-variant');
+    const textInput = row.querySelector('.ex-variant-text');
+    const variantFixed = row.querySelector('.rec + .rec');
+    const name = select ? select.value : (textInput ? textInput.value.trim() : (variantFixed ? variantFixed.textContent : ''));
+    const sets = row.querySelector('.ex-sets').value.trim();
+    const reps = row.querySelector('.ex-reps').value.trim();
+    const weight = row.querySelector('.ex-weight').value.trim();
+    const rir = row.querySelector('.ex-rir').value.trim();
+    if(sets || reps || weight || rir || (textInput && name)){
+      exercises.push({ slot: row.dataset.key, name, sets, reps, weight, rir });
+    }
+  });
+
+  const anyPrehabDone = [...warmup, ...cooldown, ...extended, ...extendedExtra].some(x=>x.done);
+  if(exercises.length === 0 && !anyPrehabDone){
+    alert('Fyll i minst en övning eller markera prehab som utförd innan du sparar.');
+    return;
+  }
+
+  const weekValue = (prog.hasWeekTypes && (currentView === 'power' || currentView === 'bas')) ? currentView : null;
+
+  const sessions = loadSessions();
+  sessions.push({
+    id: Date.now(),
+    date, pass: currentPass, week: weekValue, view: currentView,
+    exercises, warmup, cooldown, extended, extendedExtra
+  });
+  saveSessions(sessions);
+
+  document.querySelectorAll('#trainingContent input[type=text]').forEach(i=>i.value='');
+  document.querySelectorAll('#trainingContent input[type=checkbox]').forEach(i=>i.checked=false);
+
+  alert('Pass sparat!');
+});
+
+function collectChecklist(cls, items){
+  const rows = document.querySelectorAll('.'+cls+'-done');
+  const out = [];
+  rows.forEach((cb,i)=>{
+    out.push({ name: items[i] ? items[i].name : ('#'+i), done: cb.checked });
+  });
+  return out;
+}
+
+/* ================= LOG TAB ================= */
+const PASS_LABEL = {pass1:'Pass 1', pass2:'Pass 2', pass3:'Pass 3'};
+const WEEK_LABEL = {power:'Power-vecka', bas:'Bas-vecka'};
+
+function renderLog(){
+  const sessions = loadSessions().slice().sort((a,b)=> b.date.localeCompare(a.date) || b.id-a.id);
+  const container = document.getElementById('logList');
+  if(sessions.length === 0){
+    container.innerHTML = `<p class="empty">Inga pass loggade än.</p>`;
+    return;
+  }
+  container.innerHTML = sessions.map(s=>{
+    const tagClass = s.view === 'prehab' ? 'prehab' : (s.week ? s.week : 'p3');
+    const tagLabel = s.view === 'prehab' ? 'Prehab' : (s.week ? WEEK_LABEL[s.week] : PASS_LABEL[s.pass]);
+    const exLines = s.exercises.map(e=>`<div><b>${escapeHtml(e.slot||'')}</b> ${escapeHtml(e.name||'')} — ${e.sets||'?'}x${e.reps||'?'} @ ${e.weight? e.weight+' kg':'–'}${e.rir? ' (RIR '+escapeHtml(e.rir)+')':''}</div>`).join('');
+    const prehabDone = [...(s.warmup||[]), ...(s.cooldown||[])].filter(x=>x.done).length;
+    return `
+      <div class="log-entry" data-id="${s.id}">
+        <div class="top">
+          <div>
+            <span class="tag ${tagClass}">${escapeHtml(tagLabel)}</span>
+            <span class="date">${escapeHtml(s.date)} · ${PASS_LABEL[s.pass]}</span>
+          </div>
+          <button class="btn ghost small toggle-details">Visa</button>
+        </div>
+        <div class="details">
+          ${exLines || '<div>Inga huvudövningar ifyllda.</div>'}
+          <div>Prehab utförd: ${prehabDone} moment</div>
+        </div>
+        <div class="actions">
+          <button class="btn danger small del-btn">Ta bort</button>
+        </div>
+      </div>`;
+  }).join('');
+
+  container.querySelectorAll('.toggle-details').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const det = btn.closest('.log-entry').querySelector('.details');
+      det.classList.toggle('show');
+      btn.textContent = det.classList.contains('show') ? 'Dölj' : 'Visa';
+    });
+  });
+  container.querySelectorAll('.del-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(!confirm('Ta bort detta pass från loggen?')) return;
+      const id = Number(btn.closest('.log-entry').dataset.id);
+      saveSessions(loadSessions().filter(s=>s.id!==id));
+      renderLog(); renderChartOptions();
+    });
+  });
+}
+
+function renderChartOptions(){
+  const sessions = loadSessions();
+  const names = new Set();
+  sessions.forEach(s=> s.exercises.forEach(e=>{ if(e.name && e.weight) names.add(e.name); }));
+  const sel = document.getElementById('chartExerciseSelect');
+  const prevVal = sel.value;
+  sel.innerHTML = `<option value="">Välj övning…</option>` + [...names].sort().map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
+  if(names.has(prevVal)) sel.value = prevVal;
+  drawChart(sel.value);
+}
+document.getElementById('chartExerciseSelect').addEventListener('change', e=> drawChart(e.target.value));
+
+function drawChart(exName){
+  const svg = document.getElementById('chartSvg');
+  const emptyMsg = document.getElementById('chartEmpty');
+  svg.innerHTML = '';
+  if(!exName){ svg.style.display='none'; emptyMsg.style.display='block'; return; }
+
+  const sessions = loadSessions().slice().sort((a,b)=> a.date.localeCompare(b.date));
+  const points = [];
+  sessions.forEach(s=>{
+    s.exercises.forEach(e=>{
+      if(e.name === exName && e.weight && !isNaN(parseFloat(e.weight))){
+        points.push({date: s.date, weight: parseFloat(e.weight)});
+      }
+    });
+  });
+
+  if(points.length === 0){ svg.style.display='none'; emptyMsg.style.display='block'; return; }
+  svg.style.display='block'; emptyMsg.style.display='none';
+
+  const W=300, H=160, pad=28;
+  const weights = points.map(p=>p.weight);
+  const minW = Math.min(...weights), maxW = Math.max(...weights);
+  const range = (maxW-minW) || 1;
+  const stepX = points.length>1 ? (W-2*pad)/(points.length-1) : 0;
+
+  let path = '';
+  points.forEach((p,i)=>{
+    const x = pad + i*stepX;
+    const y = H-pad - ((p.weight-minW)/range)*(H-2*pad);
+    path += (i===0 ? 'M':'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+  });
+
+  let svgHtml = `<path d="${path}" fill="none" stroke="#4fd1a5" stroke-width="2.5"/>`;
+  points.forEach((p,i)=>{
+    const x = pad + i*stepX;
+    const y = H-pad - ((p.weight-minW)/range)*(H-2*pad);
+    svgHtml += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="#ff7a45"/>`;
+  });
+  svgHtml += `<text x="${pad}" y="14" fill="#9fb0c6" font-size="10">${maxW} kg</text>`;
+  svgHtml += `<text x="${pad}" y="${H-10}" fill="#9fb0c6" font-size="10">${minW} kg</text>`;
+  svg.innerHTML = svgHtml;
+}
+
+/* ================= EXPORT / IMPORT ================= */
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(loadSessions(), null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'damlaget-2026-logg-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+document.getElementById('importBtn').addEventListener('click', ()=> document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const imported = JSON.parse(reader.result);
+      if(!Array.isArray(imported)) throw new Error('fel format');
+      const existing = loadSessions();
+      const existingIds = new Set(existing.map(s=>s.id));
+      imported.forEach(s=>{ if(!existingIds.has(s.id)) existing.push(s); });
+      saveSessions(existing);
+      renderLog(); renderChartOptions();
+      alert('Import klar: ' + imported.length + ' pass inlästa.');
+    }catch(err){ alert('Kunde inte läsa filen: ' + err.message); }
+  };
+  reader.readAsText(file);
+});
+
+/* ================= INIT ================= */
+renderTraining();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {
+      /* offline install still works without this, just no offline caching */
+    });
+  });
+}
+</script>
+</body>
+</html>
