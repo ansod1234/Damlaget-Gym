@@ -17,6 +17,7 @@
     --bg:#0f1720; --card:#182333; --card2:#1e2c40; --line:#2a3a52;
     --txt:#e9eef5; --sub:#9fb0c6; --accent:#ff7a45; --accent2:#4fd1a5;
     --power:#ff7a45; --bas:#4fa8ff; --warn:#ffcf5c; --prehabc:#b892ff;
+    --fas5:#c792ea;
     font-size:16px;
   }
   *{box-sizing:border-box;}
@@ -40,9 +41,20 @@
     color:var(--sub); font-size:.85rem; font-weight:600; cursor:pointer;
   }
   nav.tabs button.active{background:var(--accent); color:#12130f;}
+  nav.tabs button.active[data-tab="fas5"]{background:var(--fas5); color:#1a1030;}
+  nav.subtabs{
+    display:flex; gap:6px; padding:10px 14px 0; background:var(--bg);
+  }
+  nav.subtabs button{
+    flex:1; padding:8px 4px; border:none; border-radius:9px; background:var(--card2);
+    color:var(--sub); font-size:.82rem; font-weight:600; cursor:pointer; border:1px solid var(--line);
+  }
+  nav.subtabs button.active{background:var(--card); color:var(--txt); border-color:var(--accent);}
   main{padding:14px 14px 30px;}
   .view{display:none;}
   .view.active{display:block;}
+  .subview{display:none; padding:14px 14px 0;}
+  .subview.active{display:block;}
   .card{
     background:var(--card); border:1px solid var(--line); border-radius:14px;
     padding:14px; margin-bottom:12px;
@@ -70,6 +82,7 @@
   .segmented.week button.active.power{background:var(--power); color:#12130f;}
   .segmented.week button.active.bas{background:var(--bas); color:#0d1a26;}
   .segmented.week button.active.prehab{background:var(--prehabc); color:#1a1030;}
+  .segmented.week button.active.wave{background:var(--accent2); color:#0d1a15;}
   .block{
     border:1px solid var(--line); border-radius:12px; padding:10px; margin:10px 0; background:var(--card2);
   }
@@ -126,14 +139,17 @@
   .log-entry{
     background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:10px; margin-bottom:10px;
   }
-  .log-entry .top{display:flex; justify-content:space-between; align-items:center;}
+  .log-entry .top{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;}
   .log-entry .top .tag{
-    font-size:.72rem; padding:3px 8px; border-radius:999px; font-weight:700;
+    font-size:.72rem; padding:3px 8px; border-radius:999px; font-weight:700; margin-right:4px;
   }
   .tag.power{background:var(--power); color:#12130f;}
   .tag.bas{background:var(--bas); color:#0d1a26;}
   .tag.p3{background:var(--warn); color:#12130f;}
   .tag.prehab{background:var(--prehabc); color:#1a1030;}
+  .tag.wave{background:var(--accent2); color:#0d1a15;}
+  .tag.fas4{background:#3a4a63; color:#e9eef5;}
+  .tag.fas5{background:var(--fas5); color:#1a1030;}
   .log-entry .date{font-size:.78rem; color:var(--sub);}
   .log-entry .details{margin-top:8px; font-size:.82rem; color:var(--txt); display:none;}
   .log-entry .details.show{display:block;}
@@ -154,145 +170,229 @@
 
 <header>
   <h1>Damlaget · Säsong 2026</h1>
-  <p>Division 1 · Underhållsstyrka &amp; Explosivitet — Fas 4</p>
+  <p id="headerSub">Division 1 · Underhållsstyrka &amp; Explosivitet — Fas 4</p>
 </header>
 
 <nav class="tabs">
-  <button data-tab="info" class="active">Info</button>
-  <button data-tab="traning">Träning</button>
+  <button data-tab="fas4" class="active">Fas 4</button>
+  <button data-tab="fas5">Fas 5</button>
   <button data-tab="logg">Logg</button>
 </nav>
 
 <main>
 
-  <!-- ============ INFO TAB ============ -->
-  <section class="view active" id="tab-info">
+  <!-- ============ FAS 4 TAB ============ -->
+  <section class="view active" id="tab-fas4">
+    <nav class="subtabs">
+      <button data-sub="info" class="active">Info</button>
+      <button data-sub="traning">Träning</button>
+    </nav>
 
-    <div class="card">
-      <h2>Helhetstanken</h2>
-      <p>Fas 1, 2 och 3 byggde tålighet, styrketak och explosivitet fram till seriepremiär. Nu handlar det om något annat: att behålla det som byggts, hålla spelarna skadefria genom en lång säsong, och stötta matchprestationen — inte konkurrera med den.</p>
-      <div class="quote">Målet i säsong är inte att bygga ny styrka. Målet är att inte tappa den vi redan har — och att göra det utan att stjäla från spelarnas ben inför match.</div>
+    <!-- ---- Fas 4 / Info ---- -->
+    <div class="subview active" id="fas4-info">
+
+      <div class="card">
+        <h2>Helhetstanken</h2>
+        <p>Fas 1, 2 och 3 byggde tålighet, styrketak och explosivitet fram till seriepremiär. Nu handlar det om något annat: att behålla det som byggts, hålla spelarna skadefria genom en lång säsong, och stötta matchprestationen — inte konkurrera med den.</p>
+        <div class="quote">Målet i säsong är inte att bygga ny styrka. Målet är att inte tappa den vi redan har — och att göra det utan att stjäla från spelarnas ben inför match.</div>
+      </div>
+
+      <div class="card">
+        <h2>Kärnprinciper</h2>
+        <ul class="bullets">
+          <li>Två fasta gympass i veckan, plus ett valfritt tredje. Samma split: Pass 1 underkropp, Pass 2 överkropp.</li>
+          <li>Belastningen vågar mellan två lägen i tvåveckorsblock (Power ↔ Bas) — se tabellen nedan.</li>
+          <li>Belastning styrs med RIR (reps i reserve) istället för fasta procentsatser.</li>
+          <li>Prehab för knä, ljumske och axel är obligatoriskt genom hela säsongen.</li>
+          <li>Pass läggs helst 48+ timmar före match. Ett kort aktiveringspass kan köras samma dag som match.</li>
+          <li>Extra hög matchbelastning (dubbelmatcher, cup)? Skala bort pass 3 först, sedan volym i pass 1–2 — aldrig prehab.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Så läser du programmet</h2>
+        <ul class="bullets">
+          <li><b>RIR</b> (Reps I Reserve): hur många reps spelaren teoretiskt hade kunnat göra till innan set brutit teknik/fart. "Bygg mot 1–2 RIR" = sista setet tungt men kontrollerat. Ingen failure (0 RIR) i säsong.</li>
+          <li><b>Superset</b>: övningar med samma bokstav (A1+A2, B1+B2 osv) körs i par — 15–20 sek vila mellan övningarna i paret, 2–3 min mellan hela varv.</li>
+          <li><b>Alternativ</b>: varje rad listar 2–3 jämbördiga alternativ — tränaren väljer utifrån utrustning, teknik eller besvär.</li>
+          <li>Explosiva/olympiska moment styrs med % av max + fart/kvalitet, inte RIR.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Vågad belastning</h2>
+        <table class="info-table">
+          <tr><th>Period</th><th>Vecko-typ</th><th>Vad som skiljer</th></tr>
+          <tr><td>Vecka 1–2, 5–6</td><td>Power-vecka</td><td>Tyngre bas-lyft (låg volym/hög intensitet) + olympiska lyft i Pass 2</td></tr>
+          <tr><td>Vecka 3–4, 7–8</td><td>Bas-vecka</td><td>Något högre volym, lägre intensitet, mer hypertrofi-ton</td></tr>
+        </table>
+        <p>Justera vågen efter matchschemat: hellre skjuta en Power-vecka en match framåt än att köra tungt inför en avgörande match.</p>
+      </div>
+
+      <div class="card">
+        <h2>Veckoupplägg</h2>
+        <table class="info-table">
+          <tr><th>Pass</th><th>Fokus</th></tr>
+          <tr><td>Pass 1</td><td>Underkropp &amp; Bål — bas/unilateral styrka, prehab knä/ljumske</td></tr>
+          <tr><td>Pass 2</td><td>Överkropp &amp; Explosivitet — press/drag + lågvolyms power/hopp/kast</td></tr>
+          <tr><td>Pass 3 (valfritt)</td><td>Kettlebell &amp; Helkropp — funktionell styrka, grepp och bål</td></tr>
+        </table>
+        <p>Rekommenderad placering: Pass 1 &amp; 2 med minst en vilodag emellan, tidigt i veckan. Pass 3 lugn dag, aldrig kvällen/morgonen före match.</p>
+        <p><b>Bara ett pass i veckan?</b> Kör Pass 1 — det bär mest av den skadeförebyggande effekten. Pass 2 kan kortas till Block A + prehab.</p>
+      </div>
+
+      <div class="card">
+        <h2>Positionsspecifika alternativ</h2>
+        <p class="pos-note">Vid behov kan explosiv-blocket i Pass 1/2 bytas ut mot något mer positionsspecifikt:</p>
+        <table class="info-table">
+          <tr><th>Position</th><th>Fokus / övningar</th></tr>
+          <tr><td>M6 / Mittförsvar</td><td>Zercher Carry, resisted lateral push, landmine rotation, tung KB row</td></tr>
+          <tr><td>V6/H6 / Kanter</td><td>Single Leg Box Jump, lateral bound with stick, approach jump</td></tr>
+          <tr><td>9-meterspelare</td><td>Medball rotational throw, enarms landmine press, rotational scoop toss</td></tr>
+          <tr><td>Målvakt</td><td>Lateral bounds, split-stance medball throw, kort lateral släde, Bottom Up KB Press</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>Core-övningar — exempel</h2>
+        <p class="pos-note">Förslag till Core-slotet under Position &amp; Core i varje pass. Bas-övningarna bygger stabilitet/uthållighet, de explosiva bygger rotationskraft för skott och kast.</p>
+        <h3>Bas core (stabilitet &amp; uthållighet)</h3>
+        <ul class="bullets">
+          <li>Planka (front eller sido)</li>
+          <li>Dead Bug</li>
+          <li>Pallof Press</li>
+          <li>Bird Dog</li>
+          <li>Hantel/KB Farmers Carry (anti-lateral flexion)</li>
+          <li>Ab Wheel Rollout (kontrollerad)</li>
+        </ul>
+        <h3>Explosiv core (rotationskraft, skott &amp; kast)</h3>
+        <ul class="bullets">
+          <li>Medicinboll Rotational Throw (mot vägg)</li>
+          <li>Landmine Rotation (rask/explosiv)</li>
+          <li>Russian Twist med medicinboll, explosivt tempo</li>
+          <li>Overhead Slam med medicinboll</li>
+          <li>Cable/Band Woodchopper (snabbt tempo)</li>
+          <li>Skater Hop med bålkontroll (rotationsstabilitet i rörelse)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Matchdagspass (referens)</h2>
+        <p>Ca 15–20 min, förmiddag/tidig eftermiddag — ersätter INTE Pass 1/2, ska väcka nervsystemet utan trötthet.</p>
+        <table class="info-table">
+          <tr><th>Övning</th><th>Set/reps</th></tr>
+          <tr><td>Lätt dynamisk uppvärmning</td><td>5 min</td></tr>
+          <tr><td>Countermovement Jump</td><td>2x3</td></tr>
+          <tr><td>Trap Bar Jump (lätt)</td><td>2x3 @ ca 20 %</td></tr>
+          <tr><td>Medball Rotational Throw</td><td>2x3/sida</td></tr>
+          <tr><td>Facepulls eller Band Pull Apart</td><td>1x12</td></tr>
+        </table>
+        <p>Ingen belastning över kroppsvikt/lätt vikt. Inga set till failure.</p>
+      </div>
+
+      <div class="card">
+        <h2>Grundregel genom säsongen</h2>
+        <ul class="bullets">
+          <li>Gymmet ska stötta matchprestationen — aldrig konkurrera med den.</li>
+          <li>Försvinner explosivitet/fart i ett pass är belastningen fel den dagen — oavsett vad som står skrivet.</li>
+          <li>Prehab (knä, ljumske, axel) är aldrig det som stryks först.</li>
+          <li>Vid tvekan: fråga spelaren hur benen/axlarna känns innan belastning bestäms.</li>
+        </ul>
+      </div>
+
     </div>
 
-    <div class="card">
-      <h2>Kärnprinciper</h2>
-      <ul class="bullets">
-        <li>Två fasta gympass i veckan, plus ett valfritt tredje. Samma split: Pass 1 underkropp, Pass 2 överkropp.</li>
-        <li>Belastningen vågar mellan två lägen i tvåveckorsblock (Power ↔ Bas) — se tabellen nedan.</li>
-        <li>Belastning styrs med RIR (reps i reserve) istället för fasta procentsatser.</li>
-        <li>Prehab för knä, ljumske och axel är obligatoriskt genom hela säsongen.</li>
-        <li>Pass läggs helst 48+ timmar före match. Ett kort aktiveringspass kan köras samma dag som match.</li>
-        <li>Extra hög matchbelastning (dubbelmatcher, cup)? Skala bort pass 3 först, sedan volym i pass 1–2 — aldrig prehab.</li>
-      </ul>
+    <!-- ---- Fas 4 / Träning ---- -->
+    <div class="subview" id="fas4-traning">
+      <div class="card">
+        <div class="segmented" id="passSelector-fas4">
+          <button data-pass="pass1" class="active">Pass 1</button>
+          <button data-pass="pass2">Pass 2</button>
+          <button data-pass="pass3">Pass 3</button>
+        </div>
+        <div class="segmented week" id="weekSelector-fas4"></div>
+      </div>
+      <div id="trainingContent-fas4"></div>
     </div>
-
-    <div class="card">
-      <h2>Så läser du programmet</h2>
-      <ul class="bullets">
-        <li><b>RIR</b> (Reps I Reserve): hur många reps spelaren teoretiskt hade kunnat göra till innan set brutit teknik/fart. "Bygg mot 1–2 RIR" = sista setet tungt men kontrollerat. Ingen failure (0 RIR) i säsong.</li>
-        <li><b>Superset</b>: övningar med samma bokstav (A1+A2, B1+B2 osv) körs i par — 15–20 sek vila mellan övningarna i paret, 2–3 min mellan hela varv.</li>
-        <li><b>Alternativ</b>: varje rad listar 2–3 jämbördiga alternativ — tränaren väljer utifrån utrustning, teknik eller besvär.</li>
-        <li>Explosiva/olympiska moment styrs med % av max + fart/kvalitet, inte RIR.</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>Vågad belastning</h2>
-      <table class="info-table">
-        <tr><th>Period</th><th>Vecko-typ</th><th>Vad som skiljer</th></tr>
-        <tr><td>Vecka 1–2, 5–6</td><td>Power-vecka</td><td>Tyngre bas-lyft (låg volym/hög intensitet) + olympiska lyft i Pass 2</td></tr>
-        <tr><td>Vecka 3–4, 7–8</td><td>Bas-vecka</td><td>Något högre volym, lägre intensitet, mer hypertrofi-ton</td></tr>
-      </table>
-      <p>Justera vågen efter matchschemat: hellre skjuta en Power-vecka en match framåt än att köra tungt inför en avgörande match.</p>
-    </div>
-
-    <div class="card">
-      <h2>Veckoupplägg</h2>
-      <table class="info-table">
-        <tr><th>Pass</th><th>Fokus</th></tr>
-        <tr><td>Pass 1</td><td>Underkropp &amp; Bål — bas/unilateral styrka, prehab knä/ljumske</td></tr>
-        <tr><td>Pass 2</td><td>Överkropp &amp; Explosivitet — press/drag + lågvolyms power/hopp/kast</td></tr>
-        <tr><td>Pass 3 (valfritt)</td><td>Kettlebell &amp; Helkropp — funktionell styrka, grepp och bål</td></tr>
-      </table>
-      <p>Rekommenderad placering: Pass 1 &amp; 2 med minst en vilodag emellan, tidigt i veckan. Pass 3 lugn dag, aldrig kvällen/morgonen före match.</p>
-      <p><b>Bara ett pass i veckan?</b> Kör Pass 1 — det bär mest av den skadeförebyggande effekten. Pass 2 kan kortas till Block A + prehab.</p>
-    </div>
-
-    <div class="card">
-      <h2>Positionsspecifika alternativ</h2>
-      <p class="pos-note">Vid behov kan explosiv-blocket i Pass 1/2 bytas ut mot något mer positionsspecifikt:</p>
-      <table class="info-table">
-        <tr><th>Position</th><th>Fokus / övningar</th></tr>
-        <tr><td>M6 / Mittförsvar</td><td>Zercher Carry, resisted lateral push, landmine rotation, tung KB row</td></tr>
-        <tr><td>V6/H6 / Kanter</td><td>Single Leg Box Jump, lateral bound with stick, approach jump</td></tr>
-        <tr><td>9-meterspelare</td><td>Medball rotational throw, enarms landmine press, rotational scoop toss</td></tr>
-        <tr><td>Målvakt</td><td>Lateral bounds, split-stance medball throw, kort lateral släde, Bottom Up KB Press</td></tr>
-      </table>
-    </div>
-
-    <div class="card">
-      <h2>Core-övningar — exempel</h2>
-      <p class="pos-note">Förslag till Core-slotet under Position &amp; Core i varje pass. Bas-övningarna bygger stabilitet/uthållighet, de explosiva bygger rotationskraft för skott och kast.</p>
-      <h3>Bas core (stabilitet &amp; uthållighet)</h3>
-      <ul class="bullets">
-        <li>Planka (front eller sido)</li>
-        <li>Dead Bug</li>
-        <li>Pallof Press</li>
-        <li>Bird Dog</li>
-        <li>Hantel/KB Farmers Carry (anti-lateral flexion)</li>
-        <li>Ab Wheel Rollout (kontrollerad)</li>
-      </ul>
-      <h3>Explosiv core (rotationskraft, skott &amp; kast)</h3>
-      <ul class="bullets">
-        <li>Medicinboll Rotational Throw (mot vägg)</li>
-        <li>Landmine Rotation (rask/explosiv)</li>
-        <li>Russian Twist med medicinboll, explosivt tempo</li>
-        <li>Overhead Slam med medicinboll</li>
-        <li>Cable/Band Woodchopper (snabbt tempo)</li>
-        <li>Skater Hop med bålkontroll (rotationsstabilitet i rörelse)</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>Matchdagspass (referens)</h2>
-      <p>Ca 15–20 min, förmiddag/tidig eftermiddag — ersätter INTE Pass 1/2, ska väcka nervsystemet utan trötthet.</p>
-      <table class="info-table">
-        <tr><th>Övning</th><th>Set/reps</th></tr>
-        <tr><td>Lätt dynamisk uppvärmning</td><td>5 min</td></tr>
-        <tr><td>Countermovement Jump</td><td>2x3</td></tr>
-        <tr><td>Trap Bar Jump (lätt)</td><td>2x3 @ ca 20 %</td></tr>
-        <tr><td>Medball Rotational Throw</td><td>2x3/sida</td></tr>
-        <tr><td>Facepulls eller Band Pull Apart</td><td>1x12</td></tr>
-      </table>
-      <p>Ingen belastning över kroppsvikt/lätt vikt. Inga set till failure.</p>
-    </div>
-
-    <div class="card">
-      <h2>Grundregel genom säsongen</h2>
-      <ul class="bullets">
-        <li>Gymmet ska stötta matchprestationen — aldrig konkurrera med den.</li>
-        <li>Försvinner explosivitet/fart i ett pass är belastningen fel den dagen — oavsett vad som står skrivet.</li>
-        <li>Prehab (knä, ljumske, axel) är aldrig det som stryks först.</li>
-        <li>Vid tvekan: fråga spelaren hur benen/axlarna känns innan belastning bestäms.</li>
-      </ul>
-    </div>
-
   </section>
 
-  <!-- ============ TRÄNING TAB ============ -->
-  <section class="view" id="tab-traning">
+  <!-- ============ FAS 5 TAB ============ -->
+  <section class="view" id="tab-fas5">
+    <nav class="subtabs">
+      <button data-sub="info" class="active">Info</button>
+      <button data-sub="traning">Träning</button>
+    </nav>
 
-    <div class="card">
-      <div class="segmented" id="passSelector">
-        <button data-pass="pass1" class="active">Pass 1</button>
-        <button data-pass="pass2">Pass 2</button>
-        <button data-pass="pass3">Pass 3</button>
+    <!-- ---- Fas 5 / Info ---- -->
+    <div class="subview active" id="fas5-info">
+
+      <div class="card">
+        <h2>Översikt och periodisering</h2>
+        <p>Fas 5 följer efter Fas 4 och sträcker sig från november fram till slutet av februari. Fokus skiftar bort från de tunga Power/Bas-vågorna till renodlat tempo och explosivitet — men utan att tappa grundstyrkan. Det löser vi genom kontrastträning: en tung styrkeövning paras direkt ihop med en explosiv rörelse i samma block.</p>
+        <h3>Period 1 — nu till och med USM steg 3 (andra helgen i januari)</h3>
+        <ul class="bullets">
+          <li>Rent tempo- och explosivitetsfokus. Ingen Power/Bas-våg.</li>
+          <li>Lägre volym på tunga lyft, ersatt med hopp, kast och rörelsehastighet.</li>
+          <li>Tre huvudlyft körs i en egen vågbelastning: Trap Bar Deadlift, Bänkpress, Rodd.</li>
+        </ul>
+        <h3>Period 2 — efter USM till februari</h3>
+        <ul class="bullets"><li>Samma stil och struktur fortsätter rakt av, ingen förändring i upplägget.</li></ul>
+        <div class="quote">Coachanteckning: Spelare som åker på USM steg 3 går ner i volym den veckan (t.ex. ett arbetsset mindre, eller ett steg lägre i vågen). Resten av truppen kör vågen som vanligt den veckan — ingen förändring i appen behövs, det är en individuell justering på plats.</div>
       </div>
-      <div class="segmented week" id="weekSelector"></div>
+
+      <div class="card">
+        <h2>Vågbelastning — Trap Bar Deadlift, Bänkpress, Rodd</h2>
+        <p>Dessa tre lyft körs i en repeterande 3-veckorscykel där reps går ner och vikten går upp. Målet är en tung, bra kvalitetssingel i vecka 3 — inte ett regelrätt 1RM-test.</p>
+        <table class="info-table">
+          <tr><th>Vecka</th><th>Set x Reps</th><th>Mål</th></tr>
+          <tr><td>Vecka 1</td><td>3 set x 3 reps</td><td>Bygg mot 2–3 RIR på sista arbetssetet.</td></tr>
+          <tr><td>Vecka 2</td><td>3 set x 2 reps</td><td>Bygg mot 1–2 RIR.</td></tr>
+          <tr><td>Vecka 3</td><td>3 set x 1 rep</td><td>Tyngsta kvalitetssingel — inte ett test. 1 RIR, bra teknik hela vägen.</td></tr>
+        </table>
+        <ul class="bullets">
+          <li>Efter vecka 3 börjar cykeln om på vecka 1 — sikta på lite mer vikt än föregående varv.</li>
+          <li>Lättare uppvärmningsset (ramp-set) innan de räknade arbetsseten loggas inte — bara de 3 arbetsseten fylls i.</li>
+          <li>Tappar tekniken under ett set: stoppa setet där, det räknas inte som ett giltigt arbetsset.</li>
+          <li>Trap Bar finns bara en i gymmet — Back Squat eller Front Squat är alltid ett fullgott alternativ.</li>
+        </ul>
+        <div class="quote">Coachanteckning: Stagnerar vikten eller formen två varv i rad — kör en lättare "deload"-vecka (samma reps-schema men stanna på 3–4 RIR hela vägen) innan nästa uppbyggnad.</div>
+      </div>
+
+      <div class="card">
+        <h2>Ny övning: ISO Step Down</h2>
+        <p>Stå på en låg bänk/platå (ca 10–15 cm). Sänk kontrollerat den ena hälen mot golvet med knät i linje med tårna, nudda lätt och tryck tillbaka upp. Håll bålen upprätt genom hela rörelsen.</p>
+        <ul class="bullets">
+          <li>3–4 set x 6–10 reps per sida.</li>
+          <li>Fokus: knäkontroll och excentrisk styrka i fronten av låret.</li>
+          <li>Fast del av uppvärmning/prehab i varje pass, och alternativ i enbensövningen i Pass 1 Block B.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Veckoupplägg</h2>
+        <table class="info-table">
+          <tr><th>Pass</th><th>Fokus</th><th>Längd</th></tr>
+          <tr><td>Pass 1</td><td>Underkropp &amp; Bål — tungt + kontrast, enbensstyrka, kast/rotation, bakre kedja</td><td>~60 min</td></tr>
+          <tr><td>Pass 2</td><td>Överkropp &amp; Explosivitet — press/drag + kontrast, kast/rotation, axelhälsa</td><td>~60 min</td></tr>
+          <tr><td>Pass 3 (valfritt)</td><td>Kettlebell &amp; Helkropp</td><td>~45–50 min</td></tr>
+        </table>
+        <p>Prehab är en fast, obligatorisk del i början av varje pass — inte en valfri tilläggsövning.</p>
+      </div>
+
     </div>
 
-    <div id="trainingContent"></div>
-
+    <!-- ---- Fas 5 / Träning ---- -->
+    <div class="subview" id="fas5-traning">
+      <div class="card">
+        <div class="segmented" id="passSelector-fas5">
+          <button data-pass="pass1" class="active">Pass 1</button>
+          <button data-pass="pass2">Pass 2</button>
+          <button data-pass="pass3">Pass 3</button>
+        </div>
+        <div class="segmented week" id="weekSelector-fas5"></div>
+      </div>
+      <div id="trainingContent-fas5"></div>
+    </div>
   </section>
 
   <!-- ============ LOGG TAB ============ -->
@@ -306,6 +406,11 @@
 
     <div class="card">
       <h2>Historik</h2>
+      <div class="segmented" id="logFilter">
+        <button data-filter="alla" class="active">Alla</button>
+        <button data-filter="fas4">Fas 4</button>
+        <button data-filter="fas5">Fas 5</button>
+      </div>
       <div id="logList"></div>
       <div class="toolbar">
         <button class="btn ghost small" id="exportBtn">Exportera (JSON)</button>
@@ -317,14 +422,14 @@
 
 </main>
 
-<div class="save-bar" id="saveBar">
+<div class="save-bar" id="saveBar" style="display:none;">
   <input type="date" id="sessionDate">
   <button class="btn primary" id="saveSessionBtn">Spara pass</button>
 </div>
 
 <script>
-/* ================= PROGRAM DATA ================= */
-const PROGRAM = {
+/* ================= PROGRAM DATA — FAS 4 (oförändrat) ================= */
+const PROGRAM_FAS4 = {
   pass1: {
     title: "Pass 1 — Underkropp & Bål",
     hasWeekTypes: true,
@@ -485,70 +590,249 @@ const EXTENDED_PREHAB_EXTRA = [
   ]}
 ];
 
+/* ================= PROGRAM DATA — FAS 5 (nytt) ================= */
+const FAS5_WARMUP_LOWER = [
+  {name:"Dead Bug", rec:"2x8/sida — bålkontroll, låg rygg i golvet"},
+  {name:"ISO Step Down", rec:"3x8/sida — se Info-fliken"},
+  {name:"Monster Walk (band)", rec:"2x10/sida — höftaktivering, knä i linje med tå"},
+  {name:"Höftcirklar + Världens bästa stretch", rec:"1x5/sida — dynamisk rörlighet inför passet"}
+];
+const FAS5_WARMUP_UPPER = [
+  {name:"Wall Slide", rec:"2x8 — axelaktivering, rygg mot vägg"},
+  {name:"Face Pull (band)", rec:"2x12 — skulderbladskontroll"},
+  {name:"Extern rotation (band)", rec:"2x10/sida — rotatorkuffsaktivering, armbåge still"},
+  {name:"ISO Step Down", rec:"3x8/sida — fast del varje pass, se Info-fliken"}
+];
+const FAS5_COOLDOWN = [
+  {name:"Lugn andning + lätt rörlighet", rec:"3–5 min — ner i puls innan ni lämnar gymmet"}
+];
+
+// Pass 1 — block B, C, D är samma oavsett vågvecka; bara Block A ändras.
+const FAS5_P1_BLOCK_B = {label:"Block B · Explosiv enbensstyrka", superset:true, exercises:[
+  {slot:"B1", title:"Enbensövning", options:["Bulgarian Split Squat","ISO Step Down (progression/regression)"], rec:"3x6/ben — kontrollerat ner, explosivt upp"},
+  {slot:"B2", title:"Lateral explosivitet", options:["Lateral Bound","Skater Hop"], rec:"3x5/sida — stick landningen, håll balansen 1 sek"}
+]};
+const FAS5_P1_BLOCK_C = {label:"Block C · Kast & rotation", superset:true, exercises:[
+  {slot:"C1", title:"Rotationskast", options:["Rotationskast, medicinboll (stående)"], rec:"3x6/sida — kraft från höft/bål, inte bara armar"},
+  {slot:"C2", title:"Rotationshopp", options:["180° hopp (rotationshopp)"], rec:"3x4 — mjuk, kontrollerad landning varje gång"}
+]};
+const FAS5_P1_BLOCK_D = {label:"Block D · Bakre kedja & bål", superset:true, exercises:[
+  {slot:"D1", title:"Höft/hamstring", options:["Single Leg RDL","Hip Thrust"], rec:"3x6/sida — rak rygg, höften leder rörelsen"},
+  {slot:"D2", title:"Anti-rotation", options:["Pallof Press"], rec:"3x8/sida — motstå rotationen, stabil bål"}
+]};
+
+// Pass 2 — block C, D är samma oavsett vågvecka; Block A och B ändras.
+const FAS5_P2_BLOCK_C = {label:"Block C · Kast & rotation", superset:true, exercises:[
+  {slot:"C1", title:"Rotation", options:["Landmine Rotation / rotationskast"], rec:"3x6/sida — kraft genom bålen, stabil fotposition"},
+  {slot:"C2", title:"Kast", options:["Medicinbollskast (slam/över huvud)"], rec:"3x5 — full kraft, kort återhämtning mellan reps"}
+]};
+const FAS5_P2_BLOCK_D = {label:"Block D · Axelhälsa & bärande", superset:false, exercises:[
+  {slot:"D1", title:"Axelpress", options:["Militärpress (lätt, teknikfokus)"], rec:"3x6 — kontrollerat, ingen svank"},
+  {slot:"D2", title:"Carry", options:["Farmer's Walk"], rec:"3x20 m — stabil bål, neutral nacke"}
+]};
+
+function waveRec(week, baseNote){
+  if(week===1) return "3 set x 3 reps — bygg mot 2–3 RIR på sista arbetssetet (uppvärmningsramp innan, ej räknad). " + baseNote;
+  if(week===2) return "3 set x 2 reps — bygg mot 1–2 RIR (uppvärmningsramp innan, ej räknad). " + baseNote;
+  return "3 set x 1 rep — tyngsta kvalitetssingel, 1 RIR, inte ett test (uppvärmningsramp innan, ej räknad). " + baseNote;
+}
+
+const PROGRAM_FAS5 = {
+  pass1: {
+    title: "Pass 1 — Underkropp & Bål (ca 60 min)",
+    hasWeekTypes: true,
+    warmup: FAS5_WARMUP_LOWER,
+    weeks: {
+      v1: [
+        {label:"Block A · Tungt + kontrast", superset:true, exercises:[
+          {slot:"A1", title:"Tungt lyft", options:["Trap Bar Deadlift","Back Squat","Front Squat"], rec:waveRec(1,"Huvudlyftet i vågbelastningen.")},
+          {slot:"A2", title:"Kontrast/hopp", options:["CMJ (countermovement jump)"], rec:"3x5 — max explosivitet, fullt återhämtad mellan hoppen"}
+        ]},
+        FAS5_P1_BLOCK_B, FAS5_P1_BLOCK_C, FAS5_P1_BLOCK_D
+      ],
+      v2: [
+        {label:"Block A · Tungt + kontrast", superset:true, exercises:[
+          {slot:"A1", title:"Tungt lyft", options:["Trap Bar Deadlift","Back Squat","Front Squat"], rec:waveRec(2,"Huvudlyftet i vågbelastningen.")},
+          {slot:"A2", title:"Kontrast/hopp", options:["CMJ (countermovement jump)"], rec:"3x5 — max explosivitet, fullt återhämtad mellan hoppen"}
+        ]},
+        FAS5_P1_BLOCK_B, FAS5_P1_BLOCK_C, FAS5_P1_BLOCK_D
+      ],
+      v3: [
+        {label:"Block A · Tungt + kontrast", superset:true, exercises:[
+          {slot:"A1", title:"Tungt lyft", options:["Trap Bar Deadlift","Back Squat","Front Squat"], rec:waveRec(3,"Huvudlyftet i vågbelastningen.")},
+          {slot:"A2", title:"Kontrast/hopp", options:["CMJ (countermovement jump)"], rec:"3x5 — max explosivitet, fullt återhämtad mellan hoppen"}
+        ]},
+        FAS5_P1_BLOCK_B, FAS5_P1_BLOCK_C, FAS5_P1_BLOCK_D
+      ]
+    },
+    cooldown: FAS5_COOLDOWN
+  },
+  pass2: {
+    title: "Pass 2 — Överkropp & Explosivitet (ca 60 min)",
+    hasWeekTypes: true,
+    warmup: FAS5_WARMUP_UPPER,
+    weeks: {
+      v1: [
+        {label:"Block A · Tungt + kontrast, press", superset:true, exercises:[
+          {slot:"A1", title:"Tungt lyft", options:["Bänkpress"], rec:waveRec(1,"Huvudlyft i vågbelastningen.")},
+          {slot:"A2", title:"Kontrast/kast", options:["Medicinboll Chest Pass"], rec:"3x5 — explosiv kastkraft direkt efter tungt set"}
+        ]},
+        {label:"Block B · Tungt + kontrast, drag", superset:true, exercises:[
+          {slot:"B1", title:"Tungt lyft", options:["Rodd (stång/hantel)"], rec:waveRec(1,"Huvudlyft i vågbelastningen.")},
+          {slot:"B2", title:"Kontrast/drag", options:["Explosivt bandrodd","Pull-up"], rec:"3x5 — snabb koncentrisk fas"}
+        ]},
+        FAS5_P2_BLOCK_C, FAS5_P2_BLOCK_D
+      ],
+      v2: [
+        {label:"Block A · Tungt + kontrast, press", superset:true, exercises:[
+          {slot:"A1", title:"Tungt lyft", options:["Bänkpress"], rec:waveRec(2,"Huvudlyft i vågbelastningen.")},
+          {slot:"A2", title:"Kontrast/kast", options:["Medicinboll Chest Pass"], rec:"3x5 — explosiv kastkraft direkt efter tungt set"}
+        ]},
+        {label:"Block B · Tungt + kontrast, drag", superset:true, exercises:[
+          {slot:"B1", title:"Tungt lyft", options:["Rodd (stång/hantel)"], rec:waveRec(2,"Huvudlyft i vågbelastningen.")},
+          {slot:"B2", title:"Kontrast/drag", options:["Explosivt bandrodd","Pull-up"], rec:"3x5 — snabb koncentrisk fas"}
+        ]},
+        FAS5_P2_BLOCK_C, FAS5_P2_BLOCK_D
+      ],
+      v3: [
+        {label:"Block A · Tungt + kontrast, press", superset:true, exercises:[
+          {slot:"A1", title:"Tungt lyft", options:["Bänkpress"], rec:waveRec(3,"Huvudlyft i vågbelastningen.")},
+          {slot:"A2", title:"Kontrast/kast", options:["Medicinboll Chest Pass"], rec:"3x5 — explosiv kastkraft direkt efter tungt set"}
+        ]},
+        {label:"Block B · Tungt + kontrast, drag", superset:true, exercises:[
+          {slot:"B1", title:"Tungt lyft", options:["Rodd (stång/hantel)"], rec:waveRec(3,"Huvudlyft i vågbelastningen.")},
+          {slot:"B2", title:"Kontrast/drag", options:["Explosivt bandrodd","Pull-up"], rec:"3x5 — snabb koncentrisk fas"}
+        ]},
+        FAS5_P2_BLOCK_C, FAS5_P2_BLOCK_D
+      ]
+    },
+    cooldown: FAS5_COOLDOWN
+  },
+  pass3: {
+    title: "Pass 3 (extra, frivilligt) — Kettlebell & Helkropp",
+    hasWeekTypes: false,
+    warmup: FAS5_WARMUP_LOWER,
+    single: [
+      {slot:"A1", title:"Helkropp, explosivt", options:["Kettlebell Swing"], rec:"4x12 — kraft från höften, inte armarna"},
+      {slot:"A2", title:"Helkropp, explosivt", options:["Goblet Squat"], rec:"3x10 — djup kontrollerad squat, armbågar innanför knäna"},
+      {slot:"A3", title:"Helkropp, explosivt", options:["Box Jump"], rec:"3x5 — mjuk landning, kliv ner, hoppa inte ner"},
+      {slot:"B1", title:"Bärande & bål", options:["Farmer's Walk (dubbel KB)"], rec:"3x20 m — stabil bål genom hela sträckan"},
+      {slot:"B2", title:"Bärande & bål", options:["Plank"], rec:"3x30–40 s — rak linje nacke till häl"},
+      {slot:"B3", title:"Bärande & bål", options:["Broad Jump"], rec:"3x4 — stick landningen, vila fullt mellan hoppen"}
+    ],
+    cooldown: FAS5_COOLDOWN
+  }
+};
+
 const POSITIONAL_SLOTS = [
   {slot:"P1", title:"Positionsövning", placeholder:"Skriv in egen övning, t.ex. Zercher Carry, Lateral Bound..."},
   {slot:"C1", title:"Core-övning", placeholder:"Skriv in egen core-övning, t.ex. Pallof Press, Medicinboll Rotational Throw..."}
 ];
+
+const PROGRAMS = { fas4: PROGRAM_FAS4, fas5: PROGRAM_FAS5 };
 
 /* ================= STORAGE ================= */
 const STORE_KEY = "damlaget2026_sessions";
 function loadSessions(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }catch(e){ return []; } }
 function saveSessions(arr){ localStorage.setItem(STORE_KEY, JSON.stringify(arr)); }
 
-/* ================= TAB NAV ================= */
+/* ================= TOP TAB NAV (Fas 4 / Fas 5 / Logg) ================= */
+const HEADER_SUB = {
+  fas4: "Division 1 · Underhållsstyrka &amp; Explosivitet — Fas 4",
+  fas5: "Division 1 · Tempo &amp; Explosivitet — Fas 5"
+};
+let activeFas = 'fas4';
+let activeSub = { fas4:'info', fas5:'info' };
+
+function updateSaveBarVisibility(){
+  const showBar = (activeFas==='fas4' || activeFas==='fas5') && activeSub[activeFas]==='traning';
+  document.getElementById('saveBar').style.display = showBar ? 'flex' : 'none';
+}
+
 document.querySelectorAll('nav.tabs button').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
-    document.getElementById('saveBar').style.display = btn.dataset.tab === 'traning' ? 'flex' : 'none';
+    activeFas = btn.dataset.tab;
+    if(HEADER_SUB[activeFas]) document.getElementById('headerSub').innerHTML = HEADER_SUB[activeFas];
+    updateSaveBarVisibility();
     if(btn.dataset.tab === 'logg'){ renderLog(); renderChartOptions(); }
   });
 });
-document.getElementById('saveBar').style.display = 'none';
 
-/* ================= PASS / VIEW SELECTORS ================= */
-let currentPass = 'pass1';
-let currentView = 'power'; // 'power' | 'bas' | 'main' | 'prehab'
+/* ================= SUB TAB NAV (Info / Träning) per fas ================= */
+document.querySelectorAll('nav.subtabs').forEach(nav=>{
+  const fasSection = nav.closest('.view');
+  const fas = fasSection.id.replace('tab-','');
+  nav.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      nav.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      fasSection.querySelectorAll('.subview').forEach(v=>v.classList.remove('active'));
+      document.getElementById(fas+'-'+btn.dataset.sub).classList.add('active');
+      activeSub[fas] = btn.dataset.sub;
+      updateSaveBarVisibility();
+    });
+  });
+});
+
+/* ================= PASS / VIEW SELECTORS (per fas) ================= */
+let currentPass = { fas4:'pass1', fas5:'pass1' };
+let currentView = { fas4:'power', fas5:'v1' };
 
 const VIEW_DEFS = {
-  withWeeks: [
-    {key:'power', label:'Power-vecka', cls:'power'},
-    {key:'bas', label:'Bas-vecka', cls:'bas'},
-    {key:'prehab', label:'Prehab', cls:'prehab'}
-  ],
-  noWeeks: [
-    {key:'main', label:'Övningar', cls:'power'},
-    {key:'prehab', label:'Prehab', cls:'prehab'}
-  ]
+  fas4: {
+    withWeeks: [
+      {key:'power', label:'Power-vecka', cls:'power'},
+      {key:'bas', label:'Bas-vecka', cls:'bas'},
+      {key:'prehab', label:'Prehab', cls:'prehab'}
+    ],
+    noWeeks: [
+      {key:'main', label:'Övningar', cls:'power'},
+      {key:'prehab', label:'Prehab', cls:'prehab'}
+    ]
+  },
+  fas5: {
+    withWeeks: [
+      {key:'v1', label:'Vecka 1', cls:'wave'},
+      {key:'v2', label:'Vecka 2', cls:'wave'},
+      {key:'v3', label:'Vecka 3', cls:'wave'}
+    ],
+    noWeeks: [
+      {key:'main', label:'Övningar', cls:'wave'}
+    ]
+  }
 };
 
-function buildViewSelector(){
-  const defs = PROGRAM[currentPass].hasWeekTypes ? VIEW_DEFS.withWeeks : VIEW_DEFS.noWeeks;
-  if(!defs.some(d=>d.key===currentView)) currentView = defs[0].key;
-  const sel = document.getElementById('weekSelector');
-  sel.innerHTML = defs.map(d=>`<button data-view="${d.key}" class="${d.key===currentView ? 'active '+d.cls : ''}">${d.label}</button>`).join('');
+function buildViewSelector(fas){
+  const prog = PROGRAMS[fas][currentPass[fas]];
+  const defs = prog.hasWeekTypes ? VIEW_DEFS[fas].withWeeks : VIEW_DEFS[fas].noWeeks;
+  if(!defs.some(d=>d.key===currentView[fas])) currentView[fas] = defs[0].key;
+  const sel = document.getElementById('weekSelector-'+fas);
+  sel.innerHTML = defs.map(d=>`<button data-view="${d.key}" class="${d.key===currentView[fas] ? 'active '+d.cls : ''}">${d.label}</button>`).join('');
   sel.querySelectorAll('button').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      currentView = btn.dataset.view;
-      buildViewSelector();
-      renderTraining();
+      currentView[fas] = btn.dataset.view;
+      buildViewSelector(fas);
+      renderTraining(fas);
     });
   });
 }
 
-document.querySelectorAll('#passSelector button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('#passSelector button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    currentPass = btn.dataset.pass;
-    buildViewSelector();
-    renderTraining();
+['fas4','fas5'].forEach(fas=>{
+  document.querySelectorAll('#passSelector-'+fas+' button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#passSelector-'+fas+' button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      currentPass[fas] = btn.dataset.pass;
+      buildViewSelector(fas);
+      renderTraining(fas);
+    });
   });
+  buildViewSelector(fas);
 });
-
-buildViewSelector();
 
 /* ================= RENDER TRAINING ================= */
 function exerciseRowHtml(ex, keyPrefix){
@@ -602,7 +886,7 @@ function checkListHtml(items, cls){
     </div>`).join('');
 }
 
-function renderPrehabPage(prog){
+function renderPrehabPage(prog, containerId){
   let html = `<div class="card"><h2>${escapeHtml(prog.title)} — Prehab</h2>`;
   html += `<p class="rec">Fullständig skadeförebyggande helkroppsrutin, 45–60 min. Kör vid behov — t.ex. på en lugn dag eller som eget kort pass mellan ordinarie gympass.</p>`;
   EXTENDED_PREHAB.forEach(sec=>{
@@ -613,25 +897,26 @@ function renderPrehabPage(prog){
     html += `<div class="sub-section"><h4>${escapeHtml(sec.h)}</h4>${checkListHtml(sec.items,'extx')}</div>`;
   });
   html += `</details></div>`;
-  document.getElementById('trainingContent').innerHTML = html;
+  document.getElementById(containerId).innerHTML = html;
 }
 
-function renderTraining(){
-  const prog = PROGRAM[currentPass];
+function renderTraining(fas){
+  const prog = PROGRAMS[fas][currentPass[fas]];
+  const containerId = 'trainingContent-'+fas;
 
-  if(currentView === 'prehab'){
-    renderPrehabPage(prog);
+  if(currentView[fas] === 'prehab'){
+    renderPrehabPage(prog, containerId);
     return;
   }
 
   let html = `<div class="card"><h2>${escapeHtml(prog.title)}</h2>`;
 
   if(prog.warmup && prog.warmup.length){
-    html += `<h3>Prehab &amp; aktivering</h3><div class="block">${checkListHtml(prog.warmup,'warm')}</div>`;
+    html += `<h3>Prehab &amp; aktivering${fas==='fas5' ? ' (fast del — ca 8–10 min)' : ''}</h3><div class="block">${checkListHtml(prog.warmup,'warm')}</div>`;
   }
 
   if(prog.hasWeekTypes){
-    const blocks = prog.weeks[currentView];
+    const blocks = prog.weeks[currentView[fas]];
     blocks.forEach(b=>{
       html += `<div class="block"><div class="block-title">${escapeHtml(b.label)}${b.superset ? ' · superset (15–20 sek vila mellan, 2–3 min mellan varv)' : ''}</div>`;
       b.exercises.forEach(ex=> html += exerciseRowHtml(ex, ex.slot));
@@ -646,12 +931,12 @@ function renderTraining(){
   html += positionalBlockHtml();
 
   if(prog.cooldown && prog.cooldown.length){
-    html += `<h3>Avslutande prehab</h3><div class="block">${checkListHtml(prog.cooldown,'cool')}</div>`;
+    html += `<h3>Nedvarvning</h3><div class="block">${checkListHtml(prog.cooldown,'cool')}</div>`;
   }
 
   html += `</div>`;
 
-  document.getElementById('trainingContent').innerHTML = html;
+  document.getElementById(containerId).innerHTML = html;
 }
 
 function escapeHtml(s){
@@ -662,16 +947,19 @@ function escapeHtml(s){
 document.getElementById('sessionDate').valueAsDate = new Date();
 
 document.getElementById('saveSessionBtn').addEventListener('click', ()=>{
-  const prog = PROGRAM[currentPass];
+  const fas = activeFas;
+  if(fas !== 'fas4' && fas !== 'fas5') return;
+  const prog = PROGRAMS[fas][currentPass[fas]];
+  const containerId = 'trainingContent-'+fas;
   const date = document.getElementById('sessionDate').value || new Date().toISOString().slice(0,10);
 
-  const warmup = collectChecklist('warm', prog.warmup);
-  const cooldown = collectChecklist('cool', prog.cooldown);
-  const extended = collectChecklist('ext', EXTENDED_PREHAB.flatMap(s=>s.items));
-  const extendedExtra = collectChecklist('extx', EXTENDED_PREHAB_EXTRA.flatMap(s=>s.items));
+  const warmup = collectChecklist('warm', prog.warmup, containerId);
+  const cooldown = collectChecklist('cool', prog.cooldown, containerId);
+  const extended = fas==='fas4' ? collectChecklist('ext', EXTENDED_PREHAB.flatMap(s=>s.items), containerId) : [];
+  const extendedExtra = fas==='fas4' ? collectChecklist('extx', EXTENDED_PREHAB_EXTRA.flatMap(s=>s.items), containerId) : [];
 
   const exercises = [];
-  document.querySelectorAll('#trainingContent .exercise').forEach(row=>{
+  document.querySelectorAll('#'+containerId+' .exercise').forEach(row=>{
     const select = row.querySelector('.ex-variant');
     const textInput = row.querySelector('.ex-variant-text');
     const variantFixed = row.querySelector('.rec + .rec');
@@ -691,24 +979,24 @@ document.getElementById('saveSessionBtn').addEventListener('click', ()=>{
     return;
   }
 
-  const weekValue = (prog.hasWeekTypes && (currentView === 'power' || currentView === 'bas')) ? currentView : null;
+  const weekValue = (prog.hasWeekTypes && currentView[fas] !== 'prehab') ? currentView[fas] : null;
 
   const sessions = loadSessions();
   sessions.push({
     id: Date.now(),
-    date, pass: currentPass, week: weekValue, view: currentView,
+    fas, date, pass: currentPass[fas], week: weekValue, view: currentView[fas],
     exercises, warmup, cooldown, extended, extendedExtra
   });
   saveSessions(sessions);
 
-  document.querySelectorAll('#trainingContent input[type=text]').forEach(i=>i.value='');
-  document.querySelectorAll('#trainingContent input[type=checkbox]').forEach(i=>i.checked=false);
+  document.querySelectorAll('#'+containerId+' input[type=text]').forEach(i=>i.value='');
+  document.querySelectorAll('#'+containerId+' input[type=checkbox]').forEach(i=>i.checked=false);
 
   alert('Pass sparat!');
 });
 
-function collectChecklist(cls, items){
-  const rows = document.querySelectorAll('.'+cls+'-done');
+function collectChecklist(cls, items, containerId){
+  const rows = document.querySelectorAll('#'+containerId+' .'+cls+'-done');
   const out = [];
   rows.forEach((cb,i)=>{
     out.push({ name: items[i] ? items[i].name : ('#'+i), done: cb.checked });
@@ -718,17 +1006,33 @@ function collectChecklist(cls, items){
 
 /* ================= LOG TAB ================= */
 const PASS_LABEL = {pass1:'Pass 1', pass2:'Pass 2', pass3:'Pass 3'};
-const WEEK_LABEL = {power:'Power-vecka', bas:'Bas-vecka'};
+const WEEK_LABEL = {power:'Power-vecka', bas:'Bas-vecka', v1:'Vecka 1', v2:'Vecka 2', v3:'Vecka 3'};
+const FAS_LABEL = {fas4:'Fas 4', fas5:'Fas 5'};
+
+let logFilter = 'alla';
+document.querySelectorAll('#logFilter button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#logFilter button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    logFilter = btn.dataset.filter;
+    renderLog();
+  });
+});
 
 function renderLog(){
-  const sessions = loadSessions().slice().sort((a,b)=> b.date.localeCompare(a.date) || b.id-a.id);
+  // Äldre loggposter (sparade innan Fas 5 infördes) saknar fältet "fas" — de räknas
+  // automatiskt som Fas 4 här utan att något i den sparade datan ändras eller tas bort.
+  let sessions = loadSessions().slice().sort((a,b)=> b.date.localeCompare(a.date) || b.id-a.id);
+  if(logFilter !== 'alla') sessions = sessions.filter(s=> (s.fas || 'fas4') === logFilter);
+
   const container = document.getElementById('logList');
   if(sessions.length === 0){
-    container.innerHTML = `<p class="empty">Inga pass loggade än.</p>`;
+    container.innerHTML = `<p class="empty">Inga pass loggade${logFilter!=='alla' ? ' för '+FAS_LABEL[logFilter] : ''} än.</p>`;
     return;
   }
   container.innerHTML = sessions.map(s=>{
-    const tagClass = s.view === 'prehab' ? 'prehab' : (s.week ? s.week : 'p3');
+    const fas = s.fas || 'fas4';
+    const tagClass = s.view === 'prehab' ? 'prehab' : (s.week ? (fas==='fas5' ? 'wave' : s.week) : 'p3');
     const tagLabel = s.view === 'prehab' ? 'Prehab' : (s.week ? WEEK_LABEL[s.week] : PASS_LABEL[s.pass]);
     const exLines = s.exercises.map(e=>`<div><b>${escapeHtml(e.slot||'')}</b> ${escapeHtml(e.name||'')} — ${e.sets||'?'}x${e.reps||'?'} @ ${e.weight? e.weight+' kg':'–'}${e.rir? ' (RIR '+escapeHtml(e.rir)+')':''}</div>`).join('');
     const prehabDone = [...(s.warmup||[]), ...(s.cooldown||[])].filter(x=>x.done).length;
@@ -736,6 +1040,7 @@ function renderLog(){
       <div class="log-entry" data-id="${s.id}">
         <div class="top">
           <div>
+            <span class="tag ${fas}">${FAS_LABEL[fas]}</span>
             <span class="tag ${tagClass}">${escapeHtml(tagLabel)}</span>
             <span class="date">${escapeHtml(s.date)} · ${PASS_LABEL[s.pass]}</span>
           </div>
@@ -853,7 +1158,9 @@ document.getElementById('importFile').addEventListener('change', (e)=>{
 });
 
 /* ================= INIT ================= */
-renderTraining();
+renderTraining('fas4');
+renderTraining('fas5');
+updateSaveBarVisibility();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

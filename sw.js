@@ -1,4 +1,4 @@
-const CACHE_NAME = 'damlaget-2026-v1';
+const CACHE_NAME = 'damlaget-2026-v2';
 const ASSETS = [
   './damlaget-sasong-2026.html',
   './manifest.json',
