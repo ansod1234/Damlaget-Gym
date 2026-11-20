@@ -374,9 +374,19 @@
           <tr><th>Pass</th><th>Fokus</th><th>Längd</th></tr>
           <tr><td>Pass 1</td><td>Underkropp &amp; Bål — tungt + kontrast, enbensstyrka, kast/rotation, bakre kedja</td><td>~60 min</td></tr>
           <tr><td>Pass 2</td><td>Överkropp &amp; Explosivitet — press/drag + kontrast, kast/rotation, axelhälsa</td><td>~60 min</td></tr>
-          <tr><td>Pass 3 (valfritt)</td><td>Kettlebell &amp; Helkropp</td><td>~45–50 min</td></tr>
+          <tr><td>Pass 3 (valfritt)</td><td>Två alternativ, välj ett per gång: <b>Kettlebell &amp; Helkropp</b>, eller <b>Oly &amp; Power</b> (frivändning/ryck-baserat)</td><td>~45–50 min</td></tr>
         </table>
         <p>Prehab är en fast, obligatorisk del i början av varje pass — inte en valfri tilläggsövning.</p>
+      </div>
+
+      <div class="card">
+        <h2>Pass 3 — Oly &amp; Power (alternativ)</h2>
+        <p>Samma huvudlyft-slot erbjuder frivändning (Hang Power Clean) eller ryck (Hang Power Snatch) som alternativ — välj utifrån vad gruppen/spelaren har teknik för. Ett tekniskt teknikblock med tom stång körs alltid först, oavsett hur bra tekniken redan sitter.</p>
+        <ul class="bullets">
+          <li>Osäker teknik den dagen? Byt huvudlyftet mot Trap Bar Jump istället för att pressa fram ett dåligt lyft.</li>
+          <li>Pull-varianterna (Clean Pull/Snatch Pull) körs tyngre än själva lyftet eftersom ingen löstagning krävs.</li>
+          <li>Kettlebell-alternativet är fortsatt förstahandsvalet för spelare som inte tränat olympiska lyft — ingen ska känna sig tvingad in i Oly-passet.</li>
+        </ul>
       </div>
 
     </div>
@@ -709,17 +719,43 @@ const PROGRAM_FAS5 = {
     cooldown: FAS5_COOLDOWN
   },
   pass3: {
-    title: "Pass 3 (extra, frivilligt) — Kettlebell & Helkropp",
-    hasWeekTypes: false,
-    warmup: FAS5_WARMUP_LOWER,
-    single: [
-      {slot:"A1", title:"Helkropp, explosivt", options:["Kettlebell Swing"], rec:"4x12 — kraft från höften, inte armarna"},
-      {slot:"A2", title:"Helkropp, explosivt", options:["Goblet Squat"], rec:"3x10 — djup kontrollerad squat, armbågar innanför knäna"},
-      {slot:"A3", title:"Helkropp, explosivt", options:["Box Jump"], rec:"3x5 — mjuk landning, kliv ner, hoppa inte ner"},
-      {slot:"B1", title:"Bärande & bål", options:["Farmer's Walk (dubbel KB)"], rec:"3x20 m — stabil bål genom hela sträckan"},
-      {slot:"B2", title:"Bärande & bål", options:["Plank"], rec:"3x30–40 s — rak linje nacke till häl"},
-      {slot:"B3", title:"Bärande & bål", options:["Broad Jump"], rec:"3x4 — stick landningen, vila fullt mellan hoppen"}
+    title: "Pass 3 (extra, frivilligt)",
+    hasWeekTypes: true,
+    viewDefs: [
+      {key:'kettlebell', label:'Kettlebell', cls:'wave'},
+      {key:'oly', label:'Oly', cls:'wave'}
     ],
+    warmup: FAS5_WARMUP_LOWER,
+    weeks: {
+      kettlebell: [
+        {label:"Block A · Helkropp, explosivt", superset:false, exercises:[
+          {slot:"A1", title:"Helkropp, explosivt", options:["Kettlebell Swing"], rec:"4x12 — kraft från höften, inte armarna"},
+          {slot:"A2", title:"Helkropp, explosivt", options:["Goblet Squat"], rec:"3x10 — djup kontrollerad squat, armbågar innanför knäna"},
+          {slot:"A3", title:"Helkropp, explosivt", options:["Box Jump"], rec:"3x5 — mjuk landning, kliv ner, hoppa inte ner"}
+        ]},
+        {label:"Block B · Bärande & bål", superset:false, exercises:[
+          {slot:"B1", title:"Bärande & bål", options:["Farmer's Walk (dubbel KB)"], rec:"3x20 m — stabil bål genom hela sträckan"},
+          {slot:"B2", title:"Bärande & bål", options:["Plank"], rec:"3x30–40 s — rak linje nacke till häl"},
+          {slot:"B3", title:"Bärande & bål", options:["Broad Jump"], rec:"3x4 — stick landningen, vila fullt mellan hoppen"}
+        ]}
+      ],
+      oly: [
+        {label:"Block A · Teknik (alltid tom stång)", superset:false, exercises:[
+          {slot:"A1", title:"Teknikprogression", options:["Hang Muscle Clean (tom stång)","Hang Muscle Snatch (tom stång)"], rec:"3x5 — ren teknik, ingen vikt. Körs alltid före belastat set, oavsett hur bra tekniken sitter."}
+        ]},
+        {label:"Block B · Huvudlyft + kontrast", superset:true, exercises:[
+          {slot:"B1", title:"Huvudlyft (frivändning eller ryck)", options:["Hang Power Clean (frivändning)","Hang Power Snatch (ryck)","Power Clean från golv"], rec:"4x3 — kvalitetsfokus. Bygg vikt bara så länge löstagning/landning är ren. Osäker teknik den dagen: kör Trap Bar Jump istället."},
+          {slot:"B2", title:"Kontrast/hopp", options:["Box Jump","CMJ (countermovement jump)"], rec:"4x3 — max explosivitet direkt efter"}
+        ]},
+        {label:"Block C · Dragstyrka", superset:false, exercises:[
+          {slot:"C1", title:"Tungt drag", options:["Clean Pull","Snatch Pull"], rec:"3x3 — tyngre än huvudlyftet eftersom ingen löstagning krävs"}
+        ]},
+        {label:"Block D · Press &amp; rotation", superset:false, exercises:[
+          {slot:"D1", title:"Press", options:["Push Press","Push Jerk"], rec:"3x5 — driv med benen, snabb låsning över huvud"},
+          {slot:"D2", title:"Rotation/kast", options:["Medicinbollskast, rotation"], rec:"3x6/sida — kraft från höft/bål"}
+        ]}
+      ]
+    },
     cooldown: FAS5_COOLDOWN
   }
 };
@@ -808,7 +844,7 @@ const VIEW_DEFS = {
 
 function buildViewSelector(fas){
   const prog = PROGRAMS[fas][currentPass[fas]];
-  const defs = prog.hasWeekTypes ? VIEW_DEFS[fas].withWeeks : VIEW_DEFS[fas].noWeeks;
+  const defs = prog.viewDefs ? prog.viewDefs : (prog.hasWeekTypes ? VIEW_DEFS[fas].withWeeks : VIEW_DEFS[fas].noWeeks);
   if(!defs.some(d=>d.key===currentView[fas])) currentView[fas] = defs[0].key;
   const sel = document.getElementById('weekSelector-'+fas);
   sel.innerHTML = defs.map(d=>`<button data-view="${d.key}" class="${d.key===currentView[fas] ? 'active '+d.cls : ''}">${d.label}</button>`).join('');
@@ -1006,7 +1042,7 @@ function collectChecklist(cls, items, containerId){
 
 /* ================= LOG TAB ================= */
 const PASS_LABEL = {pass1:'Pass 1', pass2:'Pass 2', pass3:'Pass 3'};
-const WEEK_LABEL = {power:'Power-vecka', bas:'Bas-vecka', v1:'Vecka 1', v2:'Vecka 2', v3:'Vecka 3'};
+const WEEK_LABEL = {power:'Power-vecka', bas:'Bas-vecka', v1:'Vecka 1', v2:'Vecka 2', v3:'Vecka 3', kettlebell:'Kettlebell', oly:'Oly'};
 const FAS_LABEL = {fas4:'Fas 4', fas5:'Fas 5'};
 
 let logFilter = 'alla';
